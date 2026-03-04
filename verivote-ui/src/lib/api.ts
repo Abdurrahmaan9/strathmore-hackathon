@@ -14,7 +14,7 @@ interface ApiConfig {
 }
 
 const API_CONFIG: ApiConfig = {
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'}/api`,
+    baseURL: `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api`,
     timeout: 30000, // 30 seconds
     headers: {
         'Content-Type': 'application/json',
