@@ -233,7 +233,7 @@ const ComparePage: React.FC = () => {
                                                 const candidate = availableCandidates.find(c => c.id === parseInt(e.target.value));
                                                 if (candidate) selectCandidate(0, candidate);
                                             }}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                             defaultValue=""
                                         >
                                             <option value="">Select first candidate</option>
@@ -278,7 +278,7 @@ const ComparePage: React.FC = () => {
                                                 const candidate = availableCandidates.find(c => c.id === parseInt(e.target.value));
                                                 if (candidate) selectCandidate(1, candidate);
                                             }}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                             defaultValue=""
                                         >
                                             <option value="">Select second candidate</option>

@@ -230,7 +230,7 @@ const AboutUs: React.FC = () => {
                 <Breadcrumb pageTitle="About Us" />
 
                 {/* Global Search */}
-                <GlobalSearch
+                {/* <GlobalSearch
                     placeholder="Find your candidates and make informed decisions..."
                     showLocationFilter={true}
                     showAdvancedFilters={true}
@@ -244,7 +244,7 @@ const AboutUs: React.FC = () => {
                         constituencies: [],
                         parties: [],
                     }}
-                />
+                /> */}
 
                 {/* Main Content */}
                 {loading ? (
