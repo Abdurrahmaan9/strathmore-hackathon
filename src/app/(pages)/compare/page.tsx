@@ -9,7 +9,7 @@ import { BaseCandidate, CandidateSummary, RiskLevel } from '@/types/api';
 
 // Comparison interface for VoteTrace360
 interface ComparisonCandidate {
-    candidate: BaseCandidate;
+    candidate: ComparisonData;
     details: CandidateSummary | null;
 }
 
@@ -383,12 +383,12 @@ const ComparePage: React.FC = () => {
                                         <div className="text-sm text-black">Donor Count</div>
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-black-force">
-                                                {selectedCandidates[0].candidate.donor_count}
+                                                {selectedCandidates[0]?.candidate?.donor_count || 0}
                                             </div>
                                         </div>
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-black-force">
-                                                {selectedCandidates[1].candidate.donor_count}
+                                                {selectedCandidates[1]?.candidate?.donor_count || 0}
                                             </div>
                                         </div>
                                     </div>
@@ -397,12 +397,12 @@ const ComparePage: React.FC = () => {
                                         <div className="text-sm text-black">High Risk Donors</div>
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-red-600">
-                                                {selectedCandidates[0].candidate.high_risk_donors}
+                                                {selectedCandidates[0]?.candidate?.high_risk_donors || 0}
                                             </div>
                                         </div>
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-red-600">
-                                                {selectedCandidates[1].candidate.high_risk_donors}
+                                                {selectedCandidates[1]?.candidate?.high_risk_donors || 0}
                                             </div>
                                         </div>
                                     </div>
@@ -419,9 +419,9 @@ const ComparePage: React.FC = () => {
                                             Higher Integrity
                                         </h3>
                                         <div className="text-2xl font-bold text-green-600">
-                                            {selectedCandidates[0].candidate.integrity_score > selectedCandidates[1].candidate.integrity_score 
-                                                ? selectedCandidates[0].candidate.name 
-                                                : selectedCandidates[1].candidate.name}
+                                            {(selectedCandidates[0]?.candidate?.integrity?.score || 0) > (selectedCandidates[1]?.candidate?.integrity?.score || 0) 
+                                                ? selectedCandidates[0]?.candidate?.name || 'Unknown' 
+                                                : selectedCandidates[1]?.candidate?.name || 'Unknown'}
                                         </div>
                                     </div>
                                     <div className="text-center">
@@ -430,9 +430,9 @@ const ComparePage: React.FC = () => {
                                             Higher Spend
                                         </h3>
                                         <div className="text-2xl font-bold text-blue-600">
-                                            {selectedCandidates[0].candidate.total_spend > selectedCandidates[1].candidate.total_spend 
-                                                ? selectedCandidates[0].candidate.name 
-                                                : selectedCandidates[1].candidate.name}
+                                            {(selectedCandidates[0]?.candidate?.financial_summary?.total_estimated_spend || 0) > (selectedCandidates[1]?.candidate?.financial_summary?.total_estimated_spend || 0) 
+                                                ? selectedCandidates[0]?.candidate?.name || 'Unknown' 
+                                                : selectedCandidates[1]?.candidate?.name || 'Unknown'}
                                         </div>
                                     </div>
                                 </div>
