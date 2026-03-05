@@ -299,7 +299,7 @@ const ComparePage: React.FC = () => {
                         <div className="space-y-6">
                             {/* Basic Comparison */}
                             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                                <h2 className="text-xl font-semibold mb-6">Candidate Comparison</h2>
+                                <h2 className="text-xl font-semibold mb-6 text-black">Candidate Comparison</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="text-center">
                                         <div className="text-sm text-black mb-2">Metric</div>
@@ -411,7 +411,7 @@ const ComparePage: React.FC = () => {
 
                             {/* Winner Analysis */}
                             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                                <h2 className="text-xl font-semibold mb-6">Analysis</h2>
+                                <h2 className="text-xl font-semibold mb-6 text-blue-600">Analysis</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="text-center">
                                         <h3 className="text-lg font-semibold mb-4 flex items-center justify-center">

@@ -3,140 +3,44 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react';
 import { Loader2, AlertCircle } from 'lucide-react';
-import CandidatesToWatch from "../components/sections/home/candidates-to-watch";
-import GetElectionReady from "../components/sections/home/get-election-ready";
-import Hero from "../components/sections/home/hero";
-import InformedVoting from "../components/sections/home/informed-voting";
 import MainLayout from "../components/layouts/main-layout";
-// import GlobalSearch from '@/components/common/global-search';
-import { Candidate } from '@/types/candidate.types';
-import useCandidates, { useCandidateSearch } from '@/hooks/use-candidates';
-import CandidateCard from '@/components/sections/candidates/candidate-card';
+import { Breadcrumb } from '@/components/common/breadcrumb';
+import OverviewStats from '../components/sections/dashboard/overview-stats';
+import CandidateIntegrityChart from '../components/sections/dashboard/candidate-integrity-chart';
+import SpendingTrends from '../components/sections/dashboard/spending-trends';
+import RecentAlerts from '../components/sections/dashboard/recent-alerts';
+import TopCandidates from '../components/sections/dashboard/top-candidates';
+import useCandidates from '@/hooks/use-candidates';
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
 
-  // Custom hooks for candidates data and search
+  // Custom hooks for candidates data and search (updated for VoteTrace360 API)
   const {
-    searchResults,
-    filterOptions,
+    candidates,
     loading,
-    searchLoading,
     error,
-    fetchInitialData,
-    searchCandidates,
-    clearSearch,
+    fetchCandidates,
     clearError,
   } = useCandidates();
-
-  const {
-    query: searchQuery,
-    setQuery: setSearchQuery,
-    filters: searchFilters,
-    setFilters: setSearchFilters,
-  } = useCandidateSearch();
 
   // Set client-side flag and load initial data
   useEffect(() => {
     setIsClient(true);
-    fetchInitialData();
-  }, [fetchInitialData]);
-
-  // Handle search from GlobalSearch component
-  const handleSearch = async (query: string, filters?: any) => {
-    if (!isClient) return;
-    setSearchQuery(query);
-    setSearchFilters(filters || {});
-    await searchCandidates(query, filters || {});
-  };
-
-  // Clear search handler
-  const handleClearSearch = () => {
-    if (!isClient) return;
-    setSearchQuery('');
-    clearSearch();
-  };
+    fetchCandidates();
+  }, [fetchCandidates]);
 
   // Handle try again for errors
   const handleTryAgain = () => {
     if (!isClient) return;
-    fetchInitialData();
-  };
-
-  // Format candidate data for display
-  const formatCandidateForDisplay = (candidate: any): Candidate => {
-    return {
-      ...candidate,
-      party: typeof candidate.party === 'object' && candidate.party?.party_name
-        ? candidate.party.party_name
-        : candidate.party || 'Independent',
-      partyAbbreviation: typeof candidate.party === 'object' && candidate.party?.party_code
-        ? candidate.party.party_code
-        : candidate.partyAbbreviation || 'IND',
-      partyLogo: typeof candidate.party === 'object' && candidate.party?.party_logo
-        ? candidate.party.party_logo
-        : candidate.partyLogo || null,
-      location: typeof candidate.county === 'object' && candidate.county?.county
-        ? candidate.county.county
-        : candidate.location || null,
-      constituency: typeof candidate.county === 'object' && candidate.county?.constituency
-        ? candidate.county.constituency
-        : candidate.constituency || null,
-    };
-  };
-
-  // Component: Search Results
-  const SearchResults = () => {
-    if (!searchResults || !isClient) return null;
-
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl md:text-2xl font-bold text-black">
-            Search Results
-            {searchResults.total !== undefined && (
-              <span className="text-sm font-normal text-gray-400 ml-2">
-                ({searchResults.total} found)
-              </span>
-            )}
-          </h2>
-          <button
-            onClick={handleClearSearch}
-            className="text-sm text-blue-400 hover:text-blue-300"
-            type="button"
-          >
-            Clear Search
-          </button>
-        </div>
-
-        {searchLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="w-6 h-6 animate-spin text-blue-400" />
-            <span className="ml-2 text-gray-400">Searching...</span>
-          </div>
-        ) : searchResults.data && searchResults.data.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
-            {searchResults.data.map((candidate: Candidate) => (
-              <CandidateCard
-                key={candidate.id}
-                candidate={formatCandidateForDisplay(candidate)}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-8 text-gray-400">
-            <AlertCircle className="w-8 h-8 mx-auto mb-2" />
-            <p>No candidates found matching your search</p>
-          </div>
-        )}
-      </div>
-    );
+    clearError();
+    fetchCandidates();
   };
 
   // Don't render interactive elements during SSR
   if (!isClient) {
     return (
-      <MainLayout className="bg-gray-900 text-black">
+      <MainLayout className="bg-white text-black">
         <div className="min-h-screen flex items-center justify-center">
           <div className="flex items-center">
             <Loader2 className="w-8 h-8 animate-spin text-blue-400" />
@@ -170,42 +74,34 @@ export default function Home() {
   }
 
   return (
-    <MainLayout className="bg-gray-900 text-black">
-      {/* Temporarily commented out GlobalSearch to fix build */}
-      {/*
-      <GlobalSearch
-        placeholder="Search by name, office, party..."
-        showLocationFilter={true}
-        showAdvancedFilters={true}
-        onSearch={handleSearch}
-        variant="hero"
-        className="bg-white border-b border-gray-200 custom-global-search"
-        initialQuery={searchQuery}
-        initialFilters={searchFilters}
-        filterOptions={{
-          counties: filterOptions?.counties || [],
-          constituencies: filterOptions?.constituencies || [],
-          parties: filterOptions?.parties || [],
-        }}
-      />
-      */}
-
+    <MainLayout className="bg-white text-black">
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <Loader2 className="w-8 h-8 animate-spin text-blue-400" />
             <span className="ml-3 text-gray-400">Loading...</span>
           </div>
-        ) : searchResults ? (
-          <SearchResults />
         ) : (
-          <>
-            <Hero />
-            <InformedVoting />
-            <CandidatesToWatch />
-            <GetElectionReady />
-          </>
+          <div className="space-y-6">
+            {/* Overview Stats */}
+            <OverviewStats candidates={candidates} />
+            
+            {/* Main Dashboard Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left Column */}
+              <div className="lg:col-span-2 space-y-6">
+                <CandidateIntegrityChart candidates={candidates} />
+                <SpendingTrends candidates={candidates} />
+              </div>
+              
+              {/* Right Column */}
+              <div className="space-y-6">
+                <RecentAlerts candidates={candidates} />
+                <TopCandidates candidates={candidates} />
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </MainLayout>
