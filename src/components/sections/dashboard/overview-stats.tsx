@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Users, TrendingUp, AlertTriangle, DollarSign } from 'lucide-react';
+import { Users, TrendingUp, AlertTriangle, DollarSign, Activity, Eye } from 'lucide-react';
 import { BaseCandidate } from '@/types/api';
 
 interface StatCardProps {
@@ -13,15 +13,16 @@ interface StatCardProps {
         isPositive: boolean;
     };
     color: string;
+    additionalInfo?: string;
 }
 
 interface OverviewStatsProps {
     candidates: BaseCandidate[];
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, icon, trend, color }) => {
+const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, icon, trend, color, additionalInfo }) => {
     return (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
                 <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${color}`}>
                     {icon}
@@ -36,37 +37,74 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, icon, trend
             <div className="text-2xl font-bold text-black mb-1">{value}</div>
             <div className="text-sm text-gray-600 mb-2">{title}</div>
             <div className="text-xs text-gray-500">{subtitle}</div>
+            {additionalInfo && (
+                <div className="text-xs text-blue-600 mt-2 font-medium">{additionalInfo}</div>
+            )}
         </div>
     );
 };
 
 const OverviewStats: React.FC<OverviewStatsProps> = ({ candidates }) => {
-    // Calculate real statistics from candidate data
+    // Debug: Log the candidates data structure from backend
+    console.log('🔍 DEBUG - Candidates data from backend:', candidates);
+    console.log('🔍 DEBUG - First candidate structure:', candidates[0]);
+    console.log('🔍 DEBUG - Number of candidates:', candidates.length);
+    
+    // Calculate real statistics from candidate data using actual backend structure
     const totalCandidates = candidates.length;
     
-    // Calculate total expenditure from all candidates
+    // Calculate total expenditure using total_estimated_spend from financial_summary
     const totalExpenditure = candidates.reduce((sum, candidate) => {
-        return sum + (candidate.total_spend || 0);
+        return sum + (candidate.financial_summary?.total_estimated_spend || 0);
     }, 0);
     
-    // Count high risk candidates
+    // Count high risk candidates using integrity.risk_level
     const highRiskCandidates = candidates.filter(candidate => 
-        candidate.risk_level === 'RED'
+        candidate.integrity?.risk_level === 'RED'
     ).length;
     
-    // Calculate total donors from all candidates
+    // Calculate total donors (this field might not be in backend yet, using placeholder)
     const totalDonors = candidates.reduce((sum, candidate) => {
         return sum + (candidate.donor_count || 0);
     }, 0);
 
-    // Format currency
+    // Calculate high risk donors (placeholder for now)
+    const highRiskDonors = candidates.reduce((sum, candidate) => {
+        return sum + (candidate.high_risk_donors || 0);
+    }, 0);
+
+    // Calculate digital vs physical spend breakdown from financial_summary
+    const totalDigitalSpend = candidates.reduce((sum, candidate) => {
+        return sum + (candidate.financial_summary?.total_digital_spend || 0);
+    }, 0);
+    
+    const totalPhysicalSpend = candidates.reduce((sum, candidate) => {
+        return sum + (candidate.financial_summary?.total_physical_spend || 0);
+    }, 0);
+
+    // Calculate average integrity score using integrity.score
+    const avgIntegrityScore = candidates.length > 0 
+        ? Math.round(candidates.reduce((sum, candidate) => sum + (candidate.integrity?.score || 0), 0) / candidates.length)
+        : 0;
+
+    // Count suspicious activities (based on backend logs)
+    const suspiciousActivities = candidates.filter(candidate => 
+        candidate.integrity?.risk_level === 'RED' || (candidate.financial_summary?.total_digital_spend || 0) > 1000000
+    ).length;
+
+    // Calculate total spending gap from backend data
+    const totalSpendingGap = candidates.reduce((sum, candidate) => {
+        return sum + (candidate.financial_summary?.spending_gap || 0);
+    }, 0);
+
+    // Format currency in KES (Kenyan Shillings)
     const formatCurrency = (amount: number) => {
         if (amount >= 1000000) {
-            return `$${(amount / 1000000).toFixed(1)}M`;
+            return `KES ${(amount / 1000000).toFixed(1)}M`;
         } else if (amount >= 1000) {
-            return `$${(amount / 1000).toFixed(0)}K`;
+            return `KES ${(amount / 1000).toFixed(0)}K`;
         }
-        return `$${amount.toFixed(0)}`;
+        return `KES ${amount.toFixed(0)}`;
     };
 
     // Format number with commas
@@ -79,34 +117,38 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({ candidates }) => {
             <StatCard
                 title="Total Candidates"
                 value={formatNumber(totalCandidates)}
-                subtitle="Across all regions"
+                subtitle="Under monitoring"
                 icon={<Users className="w-6 h-6 text-white" />}
                 trend={{ value: "12%", isPositive: true }}
                 color="bg-blue-500"
+                additionalInfo={`Avg Integrity: ${avgIntegrityScore}%`}
             />
             <StatCard
                 title="Total Expenditure"
                 value={formatCurrency(totalExpenditure)}
-                subtitle="Campaign spending tracked"
+                subtitle="From all candidates combined"
                 icon={<DollarSign className="w-6 h-6 text-white" />}
                 trend={{ value: "8%", isPositive: true }}
                 color="bg-green-500"
+                additionalInfo={`${totalCandidates} candidates contributing`}
             />
             <StatCard
-                title="High Risk Alerts"
-                value={formatNumber(highRiskCandidates)}
+                title="Suspicious Activities"
+                value={formatNumber(suspiciousActivities)}
                 subtitle="Flagged for review"
-                icon={<AlertTriangle className="w-6 h-6 text-white" />}
-                trend={{ value: "3%", isPositive: false }}
+                icon={<Eye className="w-6 h-6 text-white" />}
+                trend={{ value: "15%", isPositive: false }}
                 color="bg-red-500"
+                additionalInfo={`${highRiskDonors} high-risk donors`}
             />
             <StatCard
                 title="Active Donors"
                 value={formatNumber(totalDonors)}
                 subtitle="Verified contributors"
-                icon={<TrendingUp className="w-6 h-6 text-white" />}
+                icon={<Activity className="w-6 h-6 text-white" />}
                 trend={{ value: "15%", isPositive: true }}
                 color="bg-purple-500"
+                additionalInfo={`Gap: ${formatCurrency(Math.abs(totalSpendingGap))}`}
             />
         </div>
     );

@@ -25,51 +25,87 @@ interface SearchParams {
     [key: string]: unknown; // Allow additional params for flexibility
 }
 
-// Define candidate data interfaces based on VoteTrace360 API responses
+// Define candidate data interfaces based on actual VoteTrace360 API responses
 interface BaseCandidate {
     id: number;
     name: string;
-    integrity_score: number;
-    risk_level: 'GREEN' | 'AMBER' | 'RED';
-    total_spend: number;
-    digital_spend: number;
-    physical_spend: number;
-    donor_count: number;
-    high_risk_donors: number;
+    party: string;
+    position: string;
+    constituency: string;
+    financial_summary: {
+        total_physical_spend: number;
+        total_digital_spend: number;
+        total_estimated_spend: number;
+        total_reported_income: number;
+        spending_gap: number;
+        spending_gap_ratio: number;
+    };
+    integrity: {
+        score: number;
+        risk_level: 'GREEN' | 'AMBER' | 'RED';
+        risk_label: string;
+    };
+    donor_count?: number;
+    high_risk_donors?: number;
+}
+
+interface Donor {
+    id: number;
+    created_at: string;
+    candidate_id: number;
+    donor_name: string;
+    donation_amount: number;
+    registration_date: string | null;
+    company_age_days: number | null;
+    risk_score: 'LOW' | 'MEDIUM' | 'HIGH';
+    donation_percentage: number;
+    risk_factors: string[];
 }
 
 interface CandidateSummary {
-    id: number;
-    name: string;
-    integrity_score: number;
-    risk_level: 'GREEN' | 'AMBER' | 'RED';
-    total_spend: number;
-    digital_spend: {
-        meta: number;
-        google: number;
-        x_twitter: number;
-        total: number;
+    candidate: {
+        id: number;
+        name: string;
+        party: string;
+        position: string;
+        constituency: string;
     };
-    physical_spend: number;
-    spend_breakdown: {
-        advertising: number;
-        events: number;
-        operations: number;
-        other: number;
+    integrity: {
+        score: number;
+        risk_level: 'GREEN' | 'AMBER' | 'RED';
+        classification: string;
     };
-    donors: {
-        total_count: number;
-        high_risk_count: number;
-        total_amount: number;
-        risk_breakdown: {
-            green: { count: number; amount: number };
-            amber: { count: number; amount: number };
-            red: { count: number; amount: number };
+    financial_summary: {
+        total_physical_spend: number;
+        total_digital_spend: number;
+        total_estimated_spend: number;
+        total_reported_income: number;
+        spending_gap: number;
+        spending_gap_ratio: number;
+        unreported_percentage?: number;
+    };
+    donor_risk?: {
+        avg_donor_risk: number;
+    };
+    // Donor data structure
+    candidate_id: number;
+    total_reported_income: number;
+    donor_count: number;
+    risk_summary: {
+        high: number;
+        medium: number;
+        low: number;
+        high_risk_percentage: number;
+    };
+    red_flags: {
+        briefcase_companies: number;
+        unverifiable_entities: number;
+        concentration_risk: {
+            top_donor_percentage: number;
+            top_3_donors_percentage: number;
         };
     };
-    red_flags: string[];
-    compliance_score: number;
-    last_updated: string;
+    donors: Donor[];
 }
 
 class CandidatesService {
@@ -87,9 +123,7 @@ class CandidatesService {
         const endpoint = API_ENDPOINTS.candidates.getSummary(id);
         return apiMethods.get<CandidateSummary>(endpoint);
     }
-
-
-    }
+}
 
 // Export types for use in components
 export type {

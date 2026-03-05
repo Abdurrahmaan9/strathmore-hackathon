@@ -275,78 +275,6 @@ const AboutUs: React.FC = () => {
                             </div>
                         </section>
 
-                        {/* Our Story Section */}
-                        {/* <section className="py-12 md:py-16 lg:py-20 bg-white">
-                            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8 lg:mb-12 text-center">Our Story</h2>
-                                <div className="w-full h-48 sm:h-56 md:h-64 lg:h-72 bg-gray-300 rounded-lg mb-6 md:mb-8 lg:mb-12 flex items-center justify-center">
-                                    <div className="text-gray-500 text-center">
-                                        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-400 rounded mx-auto mb-2 md:mb-4"></div>
-                                        <p className="text-sm md:text-base">Voting process image</p>
-                                    </div>
-                                </div>
-                                <div className="prose prose-base md:prose-lg lg:prose-xl max-w-none text-gray-700">
-                                    <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-6 lg:gap-8">
-                                        <p className="text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 text-center lg:text-left">
-                                            VOTE-TRACE KENYA was born out of a simple yet powerful idea — that democracy thrives when voters are informed.
-                                            In a digital age where misinformation spreads fast, we built VOTE-TRACE KENYA to serve as a non-partisan, fact-verified,
-                                            and user-friendly platform that puts candidate information in the hands of citizens.
-                                        </p>
-                                        <p className="text-base md:text-lg lg:text-xl leading-relaxed text-center lg:text-left">
-                                            Whether you&apos;re a first-time voter or a seasoned civic participant, VOTE-TRACE KENYA helps you cut through the clutter
-                                            and vote with confidence.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="mt-8 md:mt-12 lg:mt-16 space-y-3 md:space-y-4">
-                                    <ExpandableSection
-                                        id="mission"
-                                        title="Mission"
-                                        content={missionContent}
-                                        isExpanded={expandedSection === 'mission'}
-                                        onToggle={toggleSection}
-                                    />
-                                    <ExpandableSection
-                                        id="vision"
-                                        title="Vision"
-                                        content={visionContent}
-                                        isExpanded={expandedSection === 'vision'}
-                                        onToggle={toggleSection}
-                                    />
-                                    <ExpandableSection
-                                        id="values"
-                                        title="Core Values"
-                                        content={coreValuesContent}
-                                        isExpanded={expandedSection === 'values'}
-                                        onToggle={toggleSection}
-                                    />
-                                </div>
-                            </div>
-                        </section> */}
-
-                        {/* What We Stand For Section */}
-                        {/* <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
-                            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-8 md:mb-12 lg:mb-16 text-center">What We Stand For</h2>
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-                                    <ValueCard
-                                        icon={<Shield className="w-10 h-10 md:w-12 md:h-12 text-black" />}
-                                        title="Data Verified"
-                                        description="We go through a comprehensive verification process to ensure the accuracy of the information you see."
-                                    />
-                                    <ValueCard
-                                        icon={<Scale className="w-10 h-10 md:w-12 md:h-12 text-black" />}
-                                        title="Non-Partisan"
-                                        description="We are committed to neutrality. Our platform provides information without political bias."
-                                    />
-                                    <ValueCard
-                                        icon={<Unlock className="w-10 h-10 md:w-12 md:h-12 text-black" />}
-                                        title="Open Access"
-                                        description="All information on our platform is freely available to everyone, ensuring democratic access to knowledge."
-                                    />
-                                </div>
-                            </div>
-                        </section> */}
 
                         {/* VoteTrace360 System Section */}
                         <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
@@ -469,49 +397,6 @@ const AboutUs: React.FC = () => {
                                 </div>
                             </div>
                         </section>
-
-                        {/* Who We Are Section */}
-                        {/* <section className="py-12 md:py-16 lg:py-20 bg-white">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div className="max-w-4xl">
-                                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8">Who we are</h2>
-                                    <p className="text-base md:text-lg lg:text-xl text-black mb-8 md:mb-12 lg:mb-16 max-w-4xl leading-relaxed">
-                                        We&apos;re a team of developers, designers, civic educators, and researchers committed to
-                                        strengthening electoral integrity through digital tools. Our work is driven by a deep belief
-                                        that informed voters make stronger democracies.
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12">
-                                    {teamMembers.map((member: TeamMemberType, index: number) => (
-                                        <TeamMember
-                                            key={`${member.name}-${index}`}
-                                            name={member.name}
-                                            role={member.role}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </section> */}
-
-                        {/* Call to Action Section */}
-                        {/* <section className="py-12 md:py-16 lg:py-20 bg-blue-50">
-                            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-3 md:mb-4 lg:mb-6">
-                                    Join us in creating a more transparent electoral process.
-                                </h2>
-                                <p className="text-base md:text-lg lg:text-xl text-black mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto">
-                                    Whether you&apos;re voting, volunteering, or sharing, your action matters.
-                                </p>
-                                <button
-                                    onClick={handleExploreCandidates}
-                                    className="bg-blue-600 text-black px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-lg text-base md:text-lg lg:text-xl font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                                    aria-label="Explore candidates and election information"
-                                    type="button"
-                                >
-                                    Explore Candidates Now
-                                </button>
-                            </div>
-                        </section> */}
                     </>
                 )}
             </div>

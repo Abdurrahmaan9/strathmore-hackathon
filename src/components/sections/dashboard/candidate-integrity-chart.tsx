@@ -8,10 +8,10 @@ interface CandidateIntegrityChartProps {
 }
 
 const CandidateIntegrityChart: React.FC<CandidateIntegrityChartProps> = ({ candidates }) => {
-    // Calculate real integrity data from candidates
-    const lowRiskCandidates = candidates.filter(candidate => candidate.risk_level === 'GREEN').length;
-    const mediumRiskCandidates = candidates.filter(candidate => candidate.risk_level === 'AMBER').length;
-    const highRiskCandidates = candidates.filter(candidate => candidate.risk_level === 'RED').length;
+    // Calculate real integrity data from candidates using actual backend structure
+    const lowRiskCandidates = candidates.filter(candidate => candidate.integrity?.risk_level === 'GREEN').length;
+    const mediumRiskCandidates = candidates.filter(candidate => candidate.integrity?.risk_level === 'AMBER').length;
+    const highRiskCandidates = candidates.filter(candidate => candidate.integrity?.risk_level === 'RED').length;
     
     const totalCandidates = candidates.length;
     

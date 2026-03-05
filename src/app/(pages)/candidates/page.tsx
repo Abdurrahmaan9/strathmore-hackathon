@@ -216,7 +216,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">High Risk</p>
                                             <p className="text-2xl font-bold text-red-600">
-                                                {displayedCandidates.filter(c => c.risk_level === 'RED').length}
+                                                {displayedCandidates.filter(c => c.integrity?.risk_level === 'RED').length}
                                             </p>
                                         </div>
                                         <TrendingDown className="w-8 h-8 text-red-600" />
@@ -227,7 +227,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">Low Risk</p>
                                             <p className="text-2xl font-bold text-green-600">
-                                                {displayedCandidates.filter(c => c.risk_level === 'GREEN').length}
+                                                {displayedCandidates.filter(c => c.integrity?.risk_level === 'GREEN').length}
                                             </p>
                                         </div>
                                         <TrendingUp className="w-8 h-8 text-green-600" />
@@ -238,7 +238,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">Total Spend</p>
                                             <p className="text-2xl font-bold text-gray-900">
-                                                {formatCurrency(displayedCandidates.reduce((sum, c) => sum + c.total_spend, 0))}
+                                                {formatCurrency(displayedCandidates.reduce((sum, c) => sum + (c.financial_summary?.total_estimated_spend || 0), 0))}
                                             </p>
                                         </div>
                                         <DollarSign className="w-8 h-8 text-black" />
@@ -266,9 +266,9 @@ const CandidatesPage: React.FC = () => {
                                                     {candidate.name}
                                                 </h3>
                                                 <span
-                                                    className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskLevelBgColor(candidate.risk_level)}`}
+                                                    className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskLevelBgColor(candidate.integrity?.risk_level || 'GREEN')}`}
                                                 >
-                                                    {candidate.risk_level}
+                                                    {candidate.integrity?.risk_level || 'GREEN'}
                                                 </span>
                                             </div>
                                             
@@ -280,33 +280,33 @@ const CandidatesPage: React.FC = () => {
                                                             <div
                                                                 className="h-2 rounded-full"
                                                                 style={{
-                                                                    width: `${candidate.integrity_score}%`,
-                                                                    backgroundColor: getRiskLevelColor(candidate.risk_level)
+                                                                    width: `${candidate.integrity?.score || 0}%`,
+                                                                    backgroundColor: getRiskLevelColor(candidate.integrity?.risk_level || 'GREEN')
                                                                 }}
                                                             />
                                                         </div>
-                                                    <span className="text-sm font-medium text-black-force">{candidate.integrity_score}%</span>
+                                                    <span className="text-sm font-medium text-black-force">{candidate.integrity?.score || 0}%</span>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Total Spend</span>
-                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.total_spend)}</span>
+                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.financial_summary?.total_estimated_spend || 0)}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Digital Spend</span>
-                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.digital_spend)}</span>
+                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.financial_summary?.total_digital_spend || 0)}</span>
                                                 </div>
-                                                
+
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Donors</span>
-                                                    <span className="text-sm font-medium text-black-force">{candidate.donor_count}</span>
+                                                    <span className="text-sm font-medium text-black-force">{candidate.donor_count || 0}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">High Risk Donors</span>
-                                                    <span className="text-sm font-medium text-red-600">{candidate.high_risk_donors}</span>
+                                                    <span className="text-sm font-medium text-red-600">{candidate.high_risk_donors || 0}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -331,11 +331,11 @@ const CandidatesPage: React.FC = () => {
                             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.name}</h2>
+                                        <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.candidate?.name || 'Unknown'}</h2>
                                         <span
-                                            className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${getRiskLevelBgColor(candidateDetails.risk_level)}`}
+                                            className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${getRiskLevelBgColor(candidateDetails.integrity?.risk_level || 'GREEN')}`}
                                         >
-                                            {candidateDetails.risk_level} - {candidateDetails.integrity_score}% Integrity
+                                            {candidateDetails.integrity?.risk_level || 'GREEN'} - {candidateDetails.integrity?.score || 0}% Integrity
                                         </span>
                                     </div>
                                     <button
@@ -355,16 +355,30 @@ const CandidatesPage: React.FC = () => {
                                         <h3 className="text-lg font-semibold mb-4 text-black-force">Financial Summary</h3>
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
-                                                <span className="text-black">Total Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.total_spend)}</span>
+                                                <span className="text-black">Total Estimated Spend</span>
+                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.financial_summary?.total_estimated_spend || 0)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Digital Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(typeof candidateDetails.digital_spend === 'object' ? candidateDetails.digital_spend.total : candidateDetails.digital_spend || 0)}</span>
+                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.financial_summary?.total_digital_spend || 0)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Physical Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.physical_spend)}</span>
+                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.financial_summary?.total_physical_spend || 0)}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">Reported Income</span>
+                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.financial_summary?.total_reported_income || 0)}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">Spending Gap</span>
+                                                <span className={`font-medium ${candidateDetails.financial_summary?.spending_gap && candidateDetails.financial_summary.spending_gap < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                                                    {formatCurrency(candidateDetails.financial_summary?.spending_gap || 0)}
+                                                </span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">Spending Gap Ratio</span>
+                                                <span className="font-medium text-black-force">{((candidateDetails.financial_summary?.spending_gap_ratio || 0) * 100).toFixed(1)}%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -374,31 +388,110 @@ const CandidatesPage: React.FC = () => {
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Donors</span>
-                                                <span className="font-medium text-black-force">{candidateDetails.donors?.total_count || 0}</span>
+                                                <span className="font-medium text-black-force">{candidateDetails.donor_count || 0}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-black">Total Amount</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.donors?.total_amount || 0)}</span>
+                                                <span className="text-black">Total Reported Income</span>
+                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.total_reported_income || 0)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">High Risk Donors</span>
-                                                <span className="font-medium text-red-600">{candidateDetails.donors?.high_risk_count || 0}</span>
+                                                <span className="font-medium text-red-600">{candidateDetails.risk_summary?.high || 0}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">Medium Risk Donors</span>
+                                                <span className="font-medium text-yellow-600">{candidateDetails.risk_summary?.medium || 0}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">Low Risk Donors</span>
+                                                <span className="font-medium text-green-600">{candidateDetails.risk_summary?.low || 0}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-black">High Risk Percentage</span>
+                                                <span className="font-medium text-black-force">{(candidateDetails.risk_summary?.high_risk_percentage || 0).toFixed(1)}%</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {(candidateDetails.red_flags?.length || 0) > 0 && (
+                                {/* Donors List Section */}
+                                {candidateDetails.donors && candidateDetails.donors.length > 0 && (
+                                    <div className="mt-6">
+                                        <h3 className="text-lg font-semibold mb-4 text-black-force">Top Donors</h3>
+                                        <div className="overflow-x-auto">
+                                            <table className="min-w-full divide-y divide-gray-200">
+                                                <thead className="bg-gray-50">
+                                                    <tr>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Donor Name</th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Risk Score</th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company Age</th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                    {candidateDetails.donors.slice(0, 10).map((donor, index) => (
+                                                        <tr key={donor.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                                {donor.donor_name}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                {formatCurrency(donor.donation_amount)}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                                                    donor.risk_score === 'HIGH' ? 'bg-red-100 text-red-800' :
+                                                                    donor.risk_score === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
+                                                                    'bg-green-100 text-green-800'
+                                                                }`}>
+                                                                    {donor.risk_score}
+                                                                </span>
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                {donor.company_age_days ? `${donor.company_age_days} days` : 'Unknown'}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                {donor.registration_date || 'Unknown'}
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                            {candidateDetails.donors.length > 10 && (
+                                                <div className="mt-4 text-center">
+                                                    <p className="text-sm text-gray-500">
+                                                        Showing 10 of {candidateDetails.donors.length} donors
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Red Flags Section */}
+                                {(candidateDetails.red_flags?.briefcase_companies > 0 || candidateDetails.red_flags?.unverifiable_entities > 0) && (
                                     <div className="mt-6">
                                         <h3 className="text-lg font-semibold mb-4 text-red-600">Red Flags</h3>
-                                        <ul className="space-y-2">
-                                            {candidateDetails.red_flags?.map((flag, index) => (
-                                                <li key={index} className="flex items-center gap-2 text-red-600">
+                                        <div className="space-y-3">
+                                            {candidateDetails.red_flags?.briefcase_companies > 0 && (
+                                                <div className="flex items-center gap-2 text-red-600">
                                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                                                    <span>{flag}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                                    <span>{candidateDetails.red_flags.briefcase_companies} Briefcase Companies Detected</span>
+                                                </div>
+                                            )}
+                                            {candidateDetails.red_flags?.unverifiable_entities > 0 && (
+                                                <div className="flex items-center gap-2 text-red-600">
+                                                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                                    <span>{candidateDetails.red_flags.unverifiable_entities} Unverifiable Entities Found</span>
+                                                </div>
+                                            )}
+                                            {candidateDetails.red_flags?.concentration_risk?.top_donor_percentage > 50 && (
+                                                <div className="flex items-center gap-2 text-red-600">
+                                                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                                    <span>High Concentration Risk: Top donor represents {(candidateDetails.red_flags.concentration_risk.top_donor_percentage).toFixed(1)}% of donations</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </div>

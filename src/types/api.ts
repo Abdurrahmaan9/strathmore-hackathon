@@ -36,17 +36,28 @@ export type ServiceStatus = 'healthy' | 'unhealthy' | 'degraded';
 // Alert severity types
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical';
 
-// Candidate types
+// Candidate types - Updated to match actual backend structure
 export interface BaseCandidate {
     id: number;
     name: string;
-    integrity_score: number;
-    risk_level: RiskLevel;
-    total_spend: number;
-    digital_spend: number;
-    physical_spend: number;
-    donor_count: number;
-    high_risk_donors: number;
+    party: string;
+    position: string;
+    constituency: string;
+    financial_summary: {
+        total_physical_spend: number;
+        total_digital_spend: number;
+        total_estimated_spend: number;
+        total_reported_income: number;
+        spending_gap: number;
+        spending_gap_ratio: number;
+    };
+    integrity: {
+        score: number;
+        risk_level: 'GREEN' | 'AMBER' | 'RED';
+        risk_label: string;
+    };
+    donor_count?: number;
+    high_risk_donors?: number;
 }
 
 export interface CandidateSummary {

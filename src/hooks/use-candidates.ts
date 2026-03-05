@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import candidatesService from '@/services/candidates.service';
-import { BaseCandidate, CandidateSummary, RiskLevel } from '@/types/api';
+import { BaseCandidate } from '@/types/api';
+import { BaseCandidate as ServiceBaseCandidate, CandidateSummary as ServiceCandidateSummary } from '@/services/candidates.service';
 
 interface SearchFilters {
-    risk_level?: RiskLevel;
+    risk_level?: 'GREEN' | 'AMBER' | 'RED';
     min_integrity_score?: number;
     max_integrity_score?: number;
     min_total_spend?: number;
@@ -21,7 +22,7 @@ interface SearchResults {
 
 interface UseCandidatesState {
     candidates: BaseCandidate[];
-    candidateDetails: CandidateSummary | null;
+    candidateDetails: ServiceCandidateSummary | null;
     searchResults: SearchResults | null;
     loading: boolean;
     searchLoading: boolean;
@@ -95,31 +96,31 @@ export const useCandidates = (): UseCandidatesReturn => {
                 // Apply filters
                 if (filters.risk_level) {
                     filteredCandidates = filteredCandidates.filter(candidate =>
-                        candidate.risk_level === filters.risk_level
+                        candidate.integrity?.risk_level === filters.risk_level
                     );
                 }
 
                 if (filters.min_integrity_score !== undefined) {
                     filteredCandidates = filteredCandidates.filter(candidate =>
-                        candidate.integrity_score >= filters.min_integrity_score!
+                        (candidate.integrity?.score || 0) >= filters.min_integrity_score!
                     );
                 }
 
                 if (filters.max_integrity_score !== undefined) {
                     filteredCandidates = filteredCandidates.filter(candidate =>
-                        candidate.integrity_score <= filters.max_integrity_score!
+                        (candidate.integrity?.score || 0) <= filters.max_integrity_score!
                     );
                 }
 
                 if (filters.min_total_spend !== undefined) {
                     filteredCandidates = filteredCandidates.filter(candidate =>
-                        candidate.total_spend >= filters.min_total_spend!
+                        (candidate.financial_summary?.total_estimated_spend || 0) >= filters.min_total_spend!
                     );
                 }
 
                 if (filters.max_total_spend !== undefined) {
                     filteredCandidates = filteredCandidates.filter(candidate =>
-                        candidate.total_spend <= filters.max_total_spend!
+                        (candidate.financial_summary?.total_estimated_spend || 0) <= filters.max_total_spend!
                     );
                 }
 
