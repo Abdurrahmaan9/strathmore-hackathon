@@ -13,10 +13,10 @@ const Header: React.FC = () => {
 
     const navigationItems = [
         { name: 'Home', href: '/' },
-        { name: 'AboutUs', href: '/about' },
         { name: 'Candidates', href: '/candidates' },
         { name: 'Compare', href: '/compare' },
-        { name: 'Parties', href: '/parties' },
+        { name: 'AboutUs', href: '/about' },
+        // { name: 'Parties', href: '/parties' },
         // { name: 'Elections', href: '/elections' },
         // { name: 'Issues', href: '/issues' },
         // { name: 'Resources', href: '/resources' },

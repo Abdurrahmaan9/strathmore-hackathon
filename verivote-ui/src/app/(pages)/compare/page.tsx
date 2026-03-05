@@ -67,16 +67,11 @@ const ComparePage: React.FC = () => {
 
     const selectCandidate = async (index: number, candidate: BaseCandidate) => {
         try {
-            setLoading(true);
-            setError(null);
-            
-            // Get candidate details
-            await getCandidateDetails(candidate.id);
-            
+            // Don't fetch details - just use the basic candidate info for comparison
             const newSelectedCandidates = [...selectedCandidates];
             newSelectedCandidates[index] = {
                 candidate: candidate,
-                details: candidateDetails
+                details: null // We don't need detailed info for basic comparison
             };
             setSelectedCandidates(newSelectedCandidates);
             
@@ -93,9 +88,7 @@ const ComparePage: React.FC = () => {
             window.history.replaceState({}, '', newUrl);
             
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load candidate details');
-        } finally {
-            setLoading(false);
+            setError(err instanceof Error ? err.message : 'Failed to select candidate');
         }
     };
 
@@ -138,7 +131,7 @@ const ComparePage: React.FC = () => {
             case 'GREEN': return 'bg-green-100 text-green-800';
             case 'AMBER': return 'bg-yellow-100 text-yellow-800';
             case 'RED': return 'bg-red-100 text-red-800';
-            default: return 'bg-gray-100 text-gray-800';
+            default: return 'bg-gray-100 text-black-800';
         }
     };
 
@@ -190,14 +183,28 @@ const ComparePage: React.FC = () => {
 
                 {/* Main Content */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+                    {/* Debug Info - Remove in production
+                    {process.env.NODE_ENV === 'development' && (
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                            <h3 className="text-sm font-medium text-yellow-800 mb-2">Debug Info:</h3>
+                            <div className="text-xs text-yellow-700 space-y-1">
+                                <div>Candidates Loading: {candidatesLoading ? 'Yes' : 'No'}</div>
+                                <div>Total Candidates: {candidates.length}</div>
+                                <div>Available Candidates: {availableCandidates.length}</div>
+                                <div>Selected Candidates: {selectedCandidates.filter(c => c !== null).length}</div>
+                                <div>Error: {error || candidatesError || 'None'}</div>
+                            </div>
+                        </div>
+                    )} */}
+
                     {/* Candidate Selection */}
                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-                        <h2 className="text-xl font-semibold mb-6">Select Candidates to Compare</h2>
+                        <h2 className="text-xl font-semibold mb-6 text-black">Select Candidates to Compare</h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Candidate 1 Selection */}
                             <div>
-                                <h3 className="text-lg font-medium mb-4">Candidate 1</h3>
+                                <h3 className="text-lg font-medium mb-4 text-black">Candidate 1</h3>
                                 {selectedCandidates[0] ? (
                                     <div className="border border-gray-200 rounded-lg p-4">
                                         <div className="flex justify-between items-start mb-3">
@@ -209,7 +216,7 @@ const ComparePage: React.FC = () => {
                                             </div>
                                             <button
                                                 onClick={() => removeCandidate(0)}
-                                                className="text-gray-400 hover:text-red-500"
+                                                className="text-black-400 hover:text-red-500"
                                             >
                                                 <X className="w-4 h-4" />
                                             </button>
@@ -230,7 +237,7 @@ const ComparePage: React.FC = () => {
                                             defaultValue=""
                                         >
                                             <option value="">Select first candidate</option>
-                                            {candidates.map(candidate => (
+                                            {availableCandidates.map(candidate => (
                                                 <option key={candidate.id} value={candidate.id}>
                                                     {candidate.name} - {candidate.risk_level}
                                                 </option>
@@ -242,7 +249,7 @@ const ComparePage: React.FC = () => {
 
                             {/* Candidate 2 Selection */}
                             <div>
-                                <h3 className="text-lg font-medium mb-4">Candidate 2</h3>
+                                <h3 className="text-lg font-medium mb-4 text-black">Candidate 2</h3>
                                 {selectedCandidates[1] ? (
                                     <div className="border border-gray-200 rounded-lg p-4">
                                         <div className="flex justify-between items-start mb-3">
@@ -254,7 +261,7 @@ const ComparePage: React.FC = () => {
                                             </div>
                                             <button
                                                 onClick={() => removeCandidate(1)}
-                                                className="text-gray-400 hover:text-red-500"
+                                                className="text-black-400 hover:text-red-500"
                                             >
                                                 <X className="w-4 h-4" />
                                             </button>
@@ -292,10 +299,10 @@ const ComparePage: React.FC = () => {
                         <div className="space-y-6">
                             {/* Basic Comparison */}
                             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                                <h2 className="text-xl font-semibold mb-6">Basic Comparison</h2>
+                                <h2 className="text-xl font-semibold mb-6">Candidate Comparison</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="text-center">
-                                        <div className="text-sm text-black mb-2">Candidate</div>
+                                        <div className="text-sm text-black mb-2">Metric</div>
                                     </div>
                                     <div className="text-center">
                                         <h4 className="font-semibold text-black">{selectedCandidates[0].candidate.name}</h4>
@@ -436,8 +443,8 @@ const ComparePage: React.FC = () => {
                     {/* No Candidates Selected */}
                     {!selectedCandidates[0] && !selectedCandidates[1] && (
                         <div className="text-center py-12">
-                            <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-lg font-medium text-gray-900 mb-2">Select Candidates to Compare</h3>
+                            <Users className="w-16 h-16 text-black-400 mx-auto mb-4" />
+                            <h3 className="text-lg font-medium text-black-900 mb-2">Select Candidates to Compare</h3>
                             <p className="text-black">Choose two candidates from the list above to see their comparison</p>
                         </div>
                     )}
