@@ -108,7 +108,7 @@ const CandidatesToWatch: React.FC = () => {
                             <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-4 rounded-lg overflow-hidden">
                                 {/* Placeholder background - replace with actual Image component when you have images */}
                                 <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                                    <span className="text-white font-bold text-lg">
+                                    <span className="text-black font-bold text-lg">
                                         {candidate.name.split(' ').map(n => n[0]).join('')}
                                     </span>
                                 </div>
@@ -125,7 +125,7 @@ const CandidatesToWatch: React.FC = () => {
                             <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                                 {candidate.name}
                             </h3>
-                            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                            <p className="text-sm md:text-base text-black leading-relaxed">
                                 {candidate.description}
                             </p>
                         </div>
@@ -141,7 +141,7 @@ const CandidatesToWatch: React.FC = () => {
                     {/* Comparison Table */}
                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                         {/* Table Header */}
-                        <div className="grid grid-cols-3 bg-green-600 text-white">
+                        <div className="grid grid-cols-3 bg-green-600 text-black">
                             <div className="px-4 py-3 text-center font-semibold text-sm md:text-base">
                                 Candidate 1
                             </div>
@@ -157,7 +157,7 @@ const CandidatesToWatch: React.FC = () => {
                         {policyPositions.map((position, index) => (
                             <React.Fragment key={index}>
                                 {/* Policy Name Row */}
-                                <div className="grid grid-cols-1 bg-green-600 text-white">
+                                <div className="grid grid-cols-1 bg-green-600 text-black">
                                     <div className="px-4 py-2 text-center font-medium text-sm md:text-base">
                                         {position.policy}
                                     </div>
@@ -179,7 +179,7 @@ const CandidatesToWatch: React.FC = () => {
 
                 {/* Compare Button */}
                 <div className="text-center">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 md:px-12 rounded-full text-sm md:text-base transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-black font-semibold py-3 px-8 md:px-12 rounded-full text-sm md:text-base transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
                         Compare Candidates
                     </button>
                 </div>

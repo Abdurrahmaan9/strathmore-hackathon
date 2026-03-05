@@ -36,7 +36,7 @@ export const IssueCard: React.FC<IssueCardProps> = ({
             <div className="px-4 pb-4">
                 <div className="bg-white p-4 rounded-lg border border-blue-200">
                     <div className="mb-3">
-                        <span className="text-sm font-medium text-gray-600">{`Candidate's Stance:`}</span>
+                        <span className="text-sm font-medium text-black">{`Candidate's Stance:`}</span>
                         <p className="text-gray-800 mt-1">{position.stance}</p>
                     </div>
                     {position.quote && (

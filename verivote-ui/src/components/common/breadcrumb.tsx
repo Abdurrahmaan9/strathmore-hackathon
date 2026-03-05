@@ -22,7 +22,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
     return (
         <div className="bg-white border-b">
             <div className="max-w-6xl mx-auto px-4 py-3">
-                <nav className="text-sm text-gray-600">
+                <nav className="text-sm text-black">
                     {shouldUseSimpleStructure ? (
                         // Simple structure (existing behavior)
                         <>

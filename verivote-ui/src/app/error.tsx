@@ -40,7 +40,7 @@ export default function Error({ error, reset }: ErrorProps) {
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                         Something went wrong
                     </h1>
-                    <p className="text-gray-600 mb-8 leading-relaxed">
+                    <p className="text-black mb-8 leading-relaxed">
                         We encountered an unexpected error while processing your request. Our team has been notified and is working to fix this issue.
                     </p>
 
@@ -63,7 +63,7 @@ export default function Error({ error, reset }: ErrorProps) {
                     <div className="space-y-4">
                         <button
                             onClick={handleReset}
-                            className="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
+                            className="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-black font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
                         >
                             <RefreshCw className="w-5 h-5 mr-2" />
                             Try Again
@@ -89,7 +89,7 @@ export default function Error({ error, reset }: ErrorProps) {
                     {/* Additional Help */}
                     <div className="mt-12 pt-8 border-t border-gray-200">
                         <h3 className="text-sm font-semibold text-gray-900 mb-4">Need Help?</h3>
-                        <div className="text-sm text-gray-600 space-y-2">
+                        <div className="text-sm text-black space-y-2">
                             <p>If this problem persists, please contact our support team.</p>
                             <div className="flex justify-center space-x-4">
                                 <Link href="/contact" className="text-blue-600 hover:text-blue-700 transition-colors duration-200">

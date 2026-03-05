@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Verivote",
+  title: "VOTE-TRACE KENYA",
   description: "Make informed voting decisions with comprehensive candidate profiles, side-by-side comparisons, party manifestos, and detailed information on electoral participants.",
   icons: {
     icon: '/images/favicon.jpeg',

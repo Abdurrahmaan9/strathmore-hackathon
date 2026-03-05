@@ -127,7 +127,7 @@ const AboutUs: React.FC = () => {
                 {searchLoading ? (
                     <div className="flex items-center justify-center py-8">
                         <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-                        <span className="ml-2 text-gray-600">Searching...</span>
+                        <span className="ml-2 text-black">Searching...</span>
                     </div>
                 ) : searchResults.data && searchResults.data.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
@@ -185,7 +185,7 @@ const AboutUs: React.FC = () => {
                 <div className="min-h-screen bg-gray-50">
                     <div className="flex items-center justify-center py-16">
                         <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                        <span className="ml-3 text-gray-600">Loading...</span>
+                        <span className="ml-3 text-black">Loading...</span>
                     </div>
                 </div>
             </MainLayout>
@@ -200,10 +200,10 @@ const AboutUs: React.FC = () => {
                     <div className="text-center">
                         <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
                         <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
-                        <p className="text-gray-600 mb-4">{error}</p>
+                        <p className="text-black mb-4">{error}</p>
                         <button
                             onClick={fetchInitialData}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-700"
                             type="button"
                         >
                             Try Again
@@ -244,7 +244,7 @@ const AboutUs: React.FC = () => {
                 {loading ? (
                     <div className="flex items-center justify-center py-16">
                         <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                        <span className="ml-3 text-gray-600">Loading...</span>
+                        <span className="ml-3 text-black">Loading...</span>
                     </div>
                 ) : searchResults ? (
                     <SearchResults />
@@ -256,12 +256,12 @@ const AboutUs: React.FC = () => {
                                 <div className="relative">
                                     <div className="w-full h-48 sm:h-56 md:h-64 lg:h-80 xl:h-96 bg-gray-300 rounded-lg mb-6 md:mb-8 flex items-center justify-center relative overflow-hidden">
                                         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
-                                        <div className="relative z-10 text-white text-left max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl ml-4 sm:ml-6 md:ml-8">
+                                        <div className="relative z-10 text-black text-left max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl ml-4 sm:ml-6 md:ml-8">
                                             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 md:mb-4 leading-tight">
                                                 Empowering Every Voter with Clarity, Truth, and Choice
                                             </h1>
                                         </div>
-                                        <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 right-4 sm:right-6 md:right-8 text-white/20 text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold">
+                                        <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 right-4 sm:right-6 md:right-8 text-black/20 text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold">
                                             VOTE
                                         </div>
                                     </div>
@@ -282,12 +282,12 @@ const AboutUs: React.FC = () => {
                                 <div className="prose prose-base md:prose-lg lg:prose-xl max-w-none text-gray-700">
                                     <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-6 lg:gap-8">
                                         <p className="text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 text-center lg:text-left">
-                                            VeriVote was born out of a simple yet powerful idea — that democracy thrives when voters are informed.
-                                            In a digital age where misinformation spreads fast, we built VeriVote to serve as a non-partisan, fact-verified,
+                                            VOTE-TRACE KENYA was born out of a simple yet powerful idea — that democracy thrives when voters are informed.
+                                            In a digital age where misinformation spreads fast, we built VOTE-TRACE KENYA to serve as a non-partisan, fact-verified,
                                             and user-friendly platform that puts candidate information in the hands of citizens.
                                         </p>
                                         <p className="text-base md:text-lg lg:text-xl leading-relaxed text-center lg:text-left">
-                                            Whether you&apos;re a first-time voter or a seasoned civic participant, VeriVote helps you cut through the clutter
+                                            Whether you&apos;re a first-time voter or a seasoned civic participant, VOTE-TRACE KENYA helps you cut through the clutter
                                             and vote with confidence.
                                         </p>
                                     </div>
@@ -324,17 +324,17 @@ const AboutUs: React.FC = () => {
                                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-8 md:mb-12 lg:mb-16 text-center">What We Stand For</h2>
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
                                     <ValueCard
-                                        icon={<Shield className="w-10 h-10 md:w-12 md:h-12 text-white" />}
+                                        icon={<Shield className="w-10 h-10 md:w-12 md:h-12 text-black" />}
                                         title="Data Verified"
                                         description="We go through a comprehensive verification process to ensure the accuracy of the information you see."
                                     />
                                     <ValueCard
-                                        icon={<Scale className="w-10 h-10 md:w-12 md:h-12 text-white" />}
+                                        icon={<Scale className="w-10 h-10 md:w-12 md:h-12 text-black" />}
                                         title="Non-Partisan"
                                         description="We are committed to neutrality. Our platform provides information without political bias."
                                     />
                                     <ValueCard
-                                        icon={<Unlock className="w-10 h-10 md:w-12 md:h-12 text-white" />}
+                                        icon={<Unlock className="w-10 h-10 md:w-12 md:h-12 text-black" />}
                                         title="Open Access"
                                         description="All information on our platform is freely available to everyone, ensuring democratic access to knowledge."
                                     />
@@ -347,7 +347,7 @@ const AboutUs: React.FC = () => {
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                                 <div className="max-w-4xl">
                                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8">Who we are</h2>
-                                    <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 md:mb-12 lg:mb-16 max-w-4xl leading-relaxed">
+                                    <p className="text-base md:text-lg lg:text-xl text-black mb-8 md:mb-12 lg:mb-16 max-w-4xl leading-relaxed">
                                         We&apos;re a team of developers, designers, civic educators, and researchers committed to
                                         strengthening electoral integrity through digital tools. Our work is driven by a deep belief
                                         that informed voters make stronger democracies.
@@ -371,12 +371,12 @@ const AboutUs: React.FC = () => {
                                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-3 md:mb-4 lg:mb-6">
                                     Join us in creating a more transparent electoral process.
                                 </h2>
-                                <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto">
+                                <p className="text-base md:text-lg lg:text-xl text-black mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto">
                                     Whether you&apos;re voting, volunteering, or sharing, your action matters.
                                 </p>
                                 <button
                                     onClick={handleExploreCandidates}
-                                    className="bg-blue-600 text-white px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-lg text-base md:text-lg lg:text-xl font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                    className="bg-blue-600 text-black px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-lg text-base md:text-lg lg:text-xl font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                                     aria-label="Explore candidates and election information"
                                     type="button"
                                 >

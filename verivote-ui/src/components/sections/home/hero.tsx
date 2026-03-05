@@ -76,17 +76,17 @@ const Hero: React.FC = () => {
                 <div className="relative z-10 flex flex-col justify-center items-center h-full px-4 sm:px-6 lg:px-8 text-center">
                     {/* Main Heading */}
                     <div className="max-w-4xl mx-auto mb-8">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mb-4 leading-tight">
                             Know your candidates.
                         </h1>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-6">
                             Vote Informed.
                         </h2>
                     </div>
 
                     {/* Description */}
                     <div className="max-w-2xl mx-auto mb-12">
-                        <p className="text-lg sm:text-xl text-white leading-relaxed">
+                        <p className="text-lg sm:text-xl text-black leading-relaxed">
                             Explore upcoming campaign stops and hear directly from the people seeking your vote.
                         </p>
                     </div>
@@ -95,7 +95,7 @@ const Hero: React.FC = () => {
                     <div className="w-full max-w-sm">
                         <Link
                             href="/candidates"
-                            className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg"
+                            className="block w-full bg-blue-600 hover:bg-blue-700 text-black font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg"
                         >
                             Find Candidates Near You
                         </Link>
@@ -127,7 +127,7 @@ const Hero: React.FC = () => {
                     <>
                         <button
                             onClick={handlePreviousSlide}
-                            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-20 hover:bg-opacity-30 text-black p-2 rounded-full transition-all duration-200"
                             aria-label="Previous slide"
                             type="button"
                         >
@@ -135,7 +135,7 @@ const Hero: React.FC = () => {
                         </button>
                         <button
                             onClick={handleNextSlide}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-20 hover:bg-opacity-30 text-black p-2 rounded-full transition-all duration-200"
                             aria-label="Next slide"
                             type="button"
                         >

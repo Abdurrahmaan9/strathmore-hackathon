@@ -12,7 +12,7 @@ export const ExpandableSection = ({ id, title, content, isExpanded, onToggle }: 
     <div className="mb-4">
         <button
             onClick={() => onToggle(id)}
-            className="w-full bg-blue-600 text-white p-4 rounded-lg flex justify-between items-center hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 text-black p-4 rounded-lg flex justify-between items-center hover:bg-blue-700 transition-colors"
         >
             <span className="text-lg font-semibold uppercase tracking-wide">{title}</span>
             {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}

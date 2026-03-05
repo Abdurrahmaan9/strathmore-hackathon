@@ -1,4 +1,4 @@
--- VeriVote Database Schema
+-- VOTE-TRACE KENYA Database Schema
 -- PostgreSQL schema for candidates, parties, and counties
 
 -- Enable UUID extension

@@ -17,7 +17,7 @@ interface MediaAppearancesProps {
 export const MediaAppearances: React.FC<MediaAppearancesProps> = ({ appearances }) => (
     <div className="mb-6">
         <h3 className="text-xl font-bold text-gray-800 mb-4">Media Appearances</h3>
-        <p className="text-gray-600 mb-4">
+        <p className="text-black mb-4">
             Catch up on speeches, interviews, and campaign videos shared by the candidate
         </p>
         <div className="space-y-2">

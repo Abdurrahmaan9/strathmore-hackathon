@@ -135,7 +135,7 @@ const PoliticalPartiesPage: React.FC = () => {
         return (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                 {/* Party Logo and Header */}
-                <div className={`${partyColor} p-6 text-white relative`}>
+                <div className={`${partyColor} p-6 text-black relative`}>
                     <div className="flex items-center justify-between mb-4">
                         <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
                             {party.logo && party.logo !== '/api/placeholder/150/150' ? (
@@ -145,7 +145,7 @@ const PoliticalPartiesPage: React.FC = () => {
                                     className="w-12 h-12 object-contain"
                                 />
                             ) : (
-                                <span className="text-2xl font-bold text-white">
+                                <span className="text-2xl font-bold text-black">
                                     {party.abbreviation?.charAt(0) || party.name.charAt(0)}
                                 </span>
                             )}
@@ -169,26 +169,26 @@ const PoliticalPartiesPage: React.FC = () => {
                 <div className="p-6">
                     <div className="space-y-3 mb-4">
                         {party.leader && (
-                            <div className="flex items-center text-sm text-gray-600">
+                            <div className="flex items-center text-sm text-black">
                                 <Users className="w-4 h-4 mr-2 text-gray-400" />
                                 <span><strong>Leader:</strong> {party.leader}</span>
                             </div>
                         )}
 
                         {party.headquarters && (
-                            <div className="flex items-center text-sm text-gray-600">
+                            <div className="flex items-center text-sm text-black">
                                 <MapPin className="w-4 h-4 mr-2 text-gray-400" />
                                 <span><strong>HQ:</strong> {party.headquarters}</span>
                             </div>
                         )}
 
-                        <div className="flex items-center text-sm text-gray-600">
+                        <div className="flex items-center text-sm text-black">
                             <Users className="w-4 h-4 mr-2 text-gray-400" />
                             <span><strong>Candidates:</strong> {party.candidate_count}</span>
                         </div>
 
                         {party.website && (
-                            <div className="flex items-center text-sm text-gray-600">
+                            <div className="flex items-center text-sm text-black">
                                 <Globe className="w-4 h-4 mr-2 text-gray-400" />
                                 <a
                                     href={party.website}
@@ -206,7 +206,7 @@ const PoliticalPartiesPage: React.FC = () => {
                     {/* Party Description */}
                     {party.description && (
                         <div className="mb-4">
-                            <p className="text-sm text-gray-600 line-clamp-3">
+                            <p className="text-sm text-black line-clamp-3">
                                 {party.description}
                             </p>
                         </div>
@@ -216,7 +216,7 @@ const PoliticalPartiesPage: React.FC = () => {
                     <div className="flex items-center justify-between mb-4">
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${party.is_active
                                 ? 'bg-green-100 text-green-800'
-                                : 'bg-gray-100 text-gray-600'
+                                : 'bg-gray-100 text-black'
                             }`}>
                             {party.is_active ? 'Active' : 'Inactive'}
                         </span>
@@ -251,16 +251,16 @@ const PoliticalPartiesPage: React.FC = () => {
                     />
                 ) : (
                     <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                        <Play className="w-12 h-12 text-white" />
+                        <Play className="w-12 h-12 text-black" />
                     </div>
                 )}
                 <div className="absolute top-4 left-4">
-                    <span className="px-2 py-1 bg-black bg-opacity-75 text-white text-xs rounded-full">
+                    <span className="px-2 py-1 bg-black bg-opacity-75 text-black text-xs rounded-full">
                         {content.type.toUpperCase()}
                     </span>
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-                    <div className="p-4 text-white w-full">
+                    <div className="p-4 text-black w-full">
                         <h3 className="font-bold text-lg mb-2 line-clamp-2">{content.title}</h3>
                         <div className="space-y-1">
                             <p className="text-sm opacity-90">{content.party_name}</p>
@@ -273,14 +273,14 @@ const PoliticalPartiesPage: React.FC = () => {
                 </div>
             </div>
             <div className="p-4">
-                <p className="text-sm text-gray-600 mb-3">{content.description}</p>
+                <p className="text-sm text-black mb-3">{content.description}</p>
                 <div className="flex space-x-2">
                     {content.video_url && (
                         <a
                             href={content.video_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 py-2 px-3 bg-red-600 text-white text-center rounded text-sm font-medium hover:bg-red-700 transition-colors"
+                            className="flex-1 py-2 px-3 bg-red-600 text-black text-center rounded text-sm font-medium hover:bg-red-700 transition-colors"
                         >
                             Watch Video
                         </a>
@@ -290,7 +290,7 @@ const PoliticalPartiesPage: React.FC = () => {
                             href={content.article_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 py-2 px-3 bg-blue-600 text-white text-center rounded text-sm font-medium hover:bg-blue-700 transition-colors"
+                            className="flex-1 py-2 px-3 bg-blue-600 text-black text-center rounded text-sm font-medium hover:bg-blue-700 transition-colors"
                         >
                             Read Article
                         </a>
@@ -352,7 +352,7 @@ const PoliticalPartiesPage: React.FC = () => {
                     <Breadcrumb pageTitle='Political Parties' />
                     <div className="flex items-center justify-center py-16">
                         <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                        <span className="ml-3 text-gray-600">Loading political parties...</span>
+                        <span className="ml-3 text-black">Loading political parties...</span>
                     </div>
                 </div>
             </MainLayout>
@@ -366,10 +366,10 @@ const PoliticalPartiesPage: React.FC = () => {
                     <div className="text-center">
                         <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
                         <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
-                        <p className="text-gray-600 mb-4">{error}</p>
+                        <p className="text-black mb-4">{error}</p>
                         <button
                             onClick={loadPartiesData}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-700"
                         >
                             Try Again
                         </button>
@@ -407,8 +407,8 @@ const PoliticalPartiesPage: React.FC = () => {
                             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                                 Learn about the parties shaping Kenya's political future.
                             </h1>
-                            <p className="text-lg text-gray-600 leading-relaxed">
-                                Verivote helps you explore Kenya's registered political parties to understand their values,
+                            <p className="text-lg text-black leading-relaxed">
+                                VOTE-TRACE KENYA helps you explore Kenya's registered political parties to understand their values,
                                 leadership, key issues, and affiliated candidates in one place.
                             </p>
                         </div>
@@ -420,7 +420,7 @@ const PoliticalPartiesPage: React.FC = () => {
                     {loading ? (
                         <div className="flex items-center justify-center py-16">
                             <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                            <span className="ml-3 text-gray-600">Loading political parties...</span>
+                            <span className="ml-3 text-black">Loading political parties...</span>
                         </div>
                     ) : (
                         <>
@@ -429,7 +429,7 @@ const PoliticalPartiesPage: React.FC = () => {
 
                             {/* Results Summary */}
                             <div className="mb-6">
-                                <p className="text-gray-600">
+                                <p className="text-black">
                                     {searchQuery ?
                                         `Found ${filteredParties.length} parties matching "${searchQuery}"` :
                                         `Showing ${filteredParties.length} political parties`
@@ -445,7 +445,7 @@ const PoliticalPartiesPage: React.FC = () => {
                                         <h3 className="text-xl font-medium text-gray-900 mb-2">
                                             No parties found
                                         </h3>
-                                        <p className="text-gray-600">
+                                        <p className="text-black">
                                             Try adjusting your search terms or filters to find political parties.
                                         </p>
                                     </div>
@@ -479,7 +479,7 @@ const PoliticalPartiesPage: React.FC = () => {
                                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                                             Featured Parties
                                         </h2>
-                                        <p className="text-gray-600 max-w-3xl">
+                                        <p className="text-black max-w-3xl">
                                             Keep up with parties that have recently been in the public spotlight through rallies,
                                             media appearances, or active participation in major national discussions.
                                         </p>
@@ -498,7 +498,7 @@ const PoliticalPartiesPage: React.FC = () => {
                                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                                     Want to compare parties side by side?
                                 </h3>
-                                <p className="text-gray-600 mb-6">
+                                <p className="text-black mb-6">
                                     Use our party comparison tool to see how different political parties stack up
                                     against each other in terms of policies, leadership, and track record.
                                 </p>
@@ -506,7 +506,7 @@ const PoliticalPartiesPage: React.FC = () => {
                                 <div className="space-y-4">
                                     <button
                                         onClick={() => window.location.href = '/parties/compare'}
-                                        className="w-full max-w-sm py-3 px-6 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                        className="w-full max-w-sm py-3 px-6 bg-blue-600 text-black rounded-lg font-medium hover:bg-blue-700 transition-colors"
                                     >
                                         Compare Parties
                                     </button>

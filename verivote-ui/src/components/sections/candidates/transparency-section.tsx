@@ -28,17 +28,17 @@ export const TransparencySection: React.FC<TransparencySectionProps> = ({ data }
             <div className="text-center">
                 <TransparencyIcon type="asset" />
                 <h3 className="font-semibold text-gray-800 mt-2 mb-1">Asset Declaration</h3>
-                <p className="text-sm text-gray-600">{data.assetDeclaration}</p>
+                <p className="text-sm text-black">{data.assetDeclaration}</p>
             </div>
             <div className="text-center">
                 <TransparencyIcon type="manifesto" />
                 <h3 className="font-semibold text-gray-800 mt-2 mb-1">Candidate Manifesto</h3>
-                <p className="text-sm text-gray-600">{data.candidateManifesto}</p>
+                <p className="text-sm text-black">{data.candidateManifesto}</p>
             </div>
             <div className="text-center">
                 <TransparencyIcon type="legal" />
                 <h3 className="font-semibold text-gray-800 mt-2 mb-1">Legal & Ethical History</h3>
-                <p className="text-sm text-gray-600">{data.legalEthicalHistory}</p>
+                <p className="text-sm text-black">{data.legalEthicalHistory}</p>
             </div>
         </div>
     </section>

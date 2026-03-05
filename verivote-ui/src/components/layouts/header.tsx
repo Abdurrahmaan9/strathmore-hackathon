@@ -70,18 +70,18 @@ const Header: React.FC = () => {
                 <div className="flex items-center justify-between h-16 lg:h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center group">
-                        <div className="w-8 h-8 lg:w-10 lg:h-10 mr-2 lg:mr-3 group-hover:opacity-80 transition-opacity duration-200">
+                        {/* <div className="w-8 h-8 lg:w-10 lg:h-10 mr-2 lg:mr-3 group-hover:opacity-80 transition-opacity duration-200">
                             <Image
                                 src="/images/logo-light.jpeg"
-                                alt="VeriVote Logo"
+                                // alt="VeriVote Logo"
                                 width={40}
                                 height={40}
                                 className="w-full h-full object-contain"
                                 priority
                             />
-                        </div>
+                        </div> */}
                         <span className="text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
-                            VeriVote
+                            VOTE-TRACE KENYA
                         </span>
                     </Link>
 
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
                     {/* Right Side Actions */}
                     <div className="flex items-center space-x-2 lg:space-x-4">
                         {/* Search Button - Desktop */}
-                        <button className="hidden lg:flex p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-full transition-colors duration-200">
+                        <button className="hidden lg:flex p-2 text-black hover:text-blue-600 hover:bg-gray-50 rounded-full transition-colors duration-200">
                             <Search className="w-5 h-5" />
                         </button>
 
@@ -155,7 +155,7 @@ const Header: React.FC = () => {
                         </button>
 
                         {/* Login and Sign Up Buttons - Desktop */}
-                        <div className="hidden lg:flex items-center space-x-2">
+                        {/* <div className="hidden lg:flex items-center space-x-2">
                             <a
                                 href={`${process.env.NEXT_PUBLIC_URL ?? 'https://admin.verivote.org'}/login`}
                                 className="inline-flex items-center px-4 py-2 text-blue-600 hover:text-blue-700 text-sm font-medium rounded-md border border-blue-600 hover:border-blue-700 transition-colors duration-200"
@@ -164,16 +164,16 @@ const Header: React.FC = () => {
                             </a>
                             <a
                                 href={`${process.env.NEXT_PUBLIC_URL ?? 'https://admin.verivote.org'}/register`}
-                                className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200"
+                                className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-black text-sm font-medium rounded-md transition-colors duration-200"
                             >
                                 Sign Up
                             </a>
-                        </div>
+                        </div> */}
 
                         {/* Mobile Menu Button */}
                         <button
                             onClick={toggleMenu}
-                            className="lg:hidden p-2 text-gray-600 hover:text-gray-900 rounded-md"
+                            className="lg:hidden p-2 text-black hover:text-gray-900 rounded-md"
                         >
                             {isMenuOpen ? (
                                 <X className="w-6 h-6" />
@@ -220,7 +220,7 @@ const Header: React.FC = () => {
                                                             href={subItem.href}
                                                             className={`block px-8 py-2 text-sm ${isActiveLink(subItem.href)
                                                                 ? 'text-blue-600 bg-blue-50'
-                                                                : 'text-gray-600 hover:text-gray-900'
+                                                                : 'text-black hover:text-gray-900'
                                                                 }`}
                                                             onClick={() => setIsMenuOpen(false)}
                                                         >
@@ -246,7 +246,7 @@ const Header: React.FC = () => {
                             ))}
 
                             {/* Login and Sign Up Links - Mobile */}
-                            <div className="px-4 pt-4 space-y-2">
+                            {/* <div className="px-4 pt-4 space-y-2">
                                 <a
                                     href="https://verivote.org/login"
                                     className="block w-full text-center px-4 py-2 text-blue-600 border border-blue-600 hover:bg-blue-50 font-medium rounded-md transition-colors duration-200"
@@ -256,12 +256,12 @@ const Header: React.FC = () => {
                                 </a>
                                 <a
                                     href="https://verivote.org/register"
-                                    className="block w-full text-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors duration-200"
+                                    className="block w-full text-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-black font-medium rounded-md transition-colors duration-200"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Sign Up
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 )}

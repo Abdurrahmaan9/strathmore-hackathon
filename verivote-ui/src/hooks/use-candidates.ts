@@ -1,185 +1,134 @@
 import { useState, useEffect, useCallback } from 'react';
 import candidatesService from '@/services/candidates.service';
-import {
-    Candidate,
-    CandidatesData,
-    FilterOptions,
-    SearchParams,
-    ApiResponse,
-    ActiveCategory,
-    CandidateStatistics
-} from '@/types/candidate.types';
+import { BaseCandidate, CandidateSummary, RiskLevel } from '@/types/api';
 
 interface SearchFilters {
-    position?: string;
-    county_id?: string;
-    constituency_id?: string;
-    party_id?: string;
-    gender?: string;
-    query?: string;
-}
-
-interface ComparisonFilters {
-    position?: string;
-    county_id?: string;
-    party_id?: string;
+    risk_level?: RiskLevel;
+    min_integrity_score?: number;
+    max_integrity_score?: number;
+    min_total_spend?: number;
+    max_total_spend?: number;
     search?: string;
 }
 
 interface SearchResults {
-    data: Candidate[];
+    data: BaseCandidate[];
     total: number;
     current_page: number;
     last_page: number;
     per_page: number;
-    pagination?: any;
-}
-
-interface ComparisonCandidate {
-    id: string;
-    slug: string;
-    name: string;
-    position: string;
-    party: string;
-    party_code: string;
-    county: string;
-    image: string;
-}
-
-interface ComparisonData {
-    candidate1: any;
-    candidate2: any;
-    comparison: any;
 }
 
 interface UseCandidatesState {
-    candidatesData: CandidatesData;
+    candidates: BaseCandidate[];
+    candidateDetails: CandidateSummary | null;
     searchResults: SearchResults | null;
-    filterOptions: FilterOptions;
     loading: boolean;
     searchLoading: boolean;
     error: string | null;
-    categoryLoading: Record<string, boolean>;
-    statistics: CandidateStatistics | null;
-
-    // Comparison specific state
-    comparisonCandidates: ComparisonCandidate[];
-    comparisonData: ComparisonData | null;
-    comparisonLoading: boolean;
-    comparisonError: string | null;
 }
 
 interface UseCandidatesReturn extends UseCandidatesState {
-    // Data fetching methods
-    fetchInitialData: () => Promise<void>;
+    fetchCandidates: () => Promise<void>;
     searchCandidates: (query: string, filters?: SearchFilters) => Promise<void>;
-    getCandidatesByCategory: (category: ActiveCategory, params?: SearchParams) => Promise<void>;
-    loadMoreCandidates: (category: string) => Promise<void>;
-    getCandidateDetails: (slug: string) => Promise<any>;
-    getStatistics: () => Promise<void>;
-
-    // Comparison methods
-    loadCandidatesForComparison: (filters?: ComparisonFilters) => Promise<void>;
-    compareCandidates: (candidate1Slug: string, candidate2Slug: string) => Promise<void>;
-    clearComparison: () => void;
-
-    // UI state management
+    getCandidateDetails: (id: number) => Promise<void>;
     clearSearch: () => void;
     clearError: () => void;
-    resetData: () => void;
 }
 
 export const useCandidates = (): UseCandidatesReturn => {
-    const [state, setState] = useState<any>({
-        candidatesData: {
-            presidential: [],
-            governors: [],
-            senators: [],
-            mps: [],
-            mcas: [],
-            women_reps: []
-        },
+    const [state, setState] = useState<UseCandidatesState>({
+        candidates: [],
+        candidateDetails: null,
         searchResults: null,
-        filterOptions: {
-            counties: [],
-            constituencies: [],
-            parties: []
-        },
         loading: false,
         searchLoading: false,
         error: null,
-        categoryLoading: {},
-        statistics: null,
-
-        // Comparison state
-        comparisonCandidates: [],
-        comparisonData: null,
-        comparisonLoading: false,
-        comparisonError: null
     });
 
     // Update specific state properties
     const updateState = useCallback((updates: Partial<UseCandidatesState>) => {
-        setState((prev: any) => ({ ...prev, ...updates }));
+        setState((prev) => ({ ...prev, ...updates }));
     }, []);
 
-    // Fetch initial candidates data
-    const fetchInitialData = useCallback(async () => {
+    // Fetch all candidates
+    const fetchCandidates = useCallback(async () => {
         try {
             updateState({ loading: true, error: null });
 
             const response = await candidatesService.getAllCandidates();
 
-            if (response.success) {
+            if (response.success && response.data) {
                 updateState({
-                    candidatesData: response.data?.candidates || {
-                        presidential: [],
-                        governors: [],
-                        senators: [],
-                        mps: [],
-                        mcas: [],
-                        women_reps: []
-                    },
-                    filterOptions: response.data?.filters || {
-                        counties: [],
-                        constituencies: [],
-                        parties: []
-                    }
+                    candidates: response.data,
                 });
             } else {
                 updateState({ error: response.message || 'Failed to fetch candidates' });
             }
         } catch (err) {
-            console.error('Error fetching initial data:', err);
+            console.error('Error fetching candidates:', err);
             updateState({ error: 'An unexpected error occurred while fetching candidates' });
         } finally {
             updateState({ loading: false });
         }
     }, [updateState]);
 
-    // Search candidates - Updated to match the interface
+    // Search candidates
     const searchCandidates = useCallback(async (query: string, filters: SearchFilters = {}) => {
         try {
             updateState({ searchLoading: true, error: null });
 
-            // Prepare search parameters
-            const searchParams: any = {
-                query: query.trim(),
-                ...filters,
-                per_page: 12
-            };
+            // For now, we'll filter the existing candidates locally
+            // In a real implementation, this would call a search endpoint
+            const response = await candidatesService.getAllCandidates();
 
-            const response = await candidatesService.searchCandidates(searchParams);
+            if (response.success && response.data) {
+                let filteredCandidates = response.data;
 
-            if (response.success) {
-                // Transform the response to match our SearchResults interface
+                // Apply search query
+                if (query.trim()) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.name.toLowerCase().includes(query.toLowerCase())
+                    );
+                }
+
+                // Apply filters
+                if (filters.risk_level) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.risk_level === filters.risk_level
+                    );
+                }
+
+                if (filters.min_integrity_score !== undefined) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.integrity_score >= filters.min_integrity_score!
+                    );
+                }
+
+                if (filters.max_integrity_score !== undefined) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.integrity_score <= filters.max_integrity_score!
+                    );
+                }
+
+                if (filters.min_total_spend !== undefined) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.total_spend >= filters.min_total_spend!
+                    );
+                }
+
+                if (filters.max_total_spend !== undefined) {
+                    filteredCandidates = filteredCandidates.filter(candidate =>
+                        candidate.total_spend <= filters.max_total_spend!
+                    );
+                }
+
                 const searchResults: SearchResults = {
-                    data: response.data?.data || response.data || [],
-                    total: response.data?.pagination?.total || response.data?.total || 0,
-                    current_page: response.data?.pagination?.current_page || response.data?.current_page || 1,
-                    last_page: response.data?.pagination?.last_page || response.data?.last_page || 1,
-                    per_page: response.data?.pagination?.per_page || response.data?.per_page || 12,
-                    pagination: response.data?.pagination
+                    data: filteredCandidates,
+                    total: filteredCandidates.length,
+                    current_page: 1,
+                    last_page: 1,
+                    per_page: filteredCandidates.length,
                 };
 
                 updateState({ searchResults });
@@ -200,164 +149,26 @@ export const useCandidates = (): UseCandidatesReturn => {
         }
     }, [updateState]);
 
-    // Get candidates by category
-    const getCandidatesByCategory = useCallback(async (category: ActiveCategory, params: SearchParams = {}) => {
-        try {
-            updateState({
-                categoryLoading: { ...state.categoryLoading, [category]: true },
-                error: null
-            });
-
-            const response = await candidatesService.getCandidatesByCategory(category, params);
-
-            if (response.success) {
-                updateState({
-                    candidatesData: {
-                        ...state.candidatesData,
-                        [category]: response.data?.data || response.data || []
-                    }
-                });
-            } else {
-                updateState({ error: response.message || `Failed to fetch ${category} candidates` });
-            }
-        } catch (err) {
-            console.error(`Error fetching ${category} candidates:`, err);
-            updateState({ error: `Failed to fetch ${category} candidates` });
-        } finally {
-            updateState({
-                categoryLoading: { ...state.categoryLoading, [category]: false }
-            });
-        }
-    }, [updateState, state.candidatesData, state.categoryLoading]);
-
-    // Load more candidates for a category
-    const loadMoreCandidates = useCallback(async (category: string) => {
-        try {
-            updateState({
-                categoryLoading: { ...state.categoryLoading, [category]: true },
-                error: null
-            });
-
-            const response = await candidatesService.getCandidatesByCategory(
-                category as ActiveCategory,
-                { per_page: 100 }
-            );
-
-            if (response.success) {
-                updateState({
-                    candidatesData: {
-                        ...state.candidatesData,
-                        [category]: response.data?.data || response.data || []
-                    }
-                });
-            } else {
-                updateState({ error: response.message || `Failed to load more ${category} candidates` });
-            }
-        } catch (err) {
-            console.error(`Error loading more ${category} candidates:`, err);
-            updateState({ error: `Failed to load more ${category} candidates` });
-        } finally {
-            updateState({
-                categoryLoading: { ...state.categoryLoading, [category]: false }
-            });
-        }
-    }, [updateState, state.candidatesData, state.categoryLoading]);
-
     // Get candidate details
-    const getCandidateDetails = useCallback(async (slug: string) => {
+    const getCandidateDetails = useCallback(async (id: number) => {
         try {
-            const response = await candidatesService.getCandidateDetails(slug);
+            updateState({ loading: true, error: null });
 
-            if (response.success) {
-                return response.data;
+            const response = await candidatesService.getCandidateSummary(id);
+
+            if (response.success && response.data) {
+                updateState({
+                    candidateDetails: response.data,
+                });
             } else {
-                throw new Error(response.message || 'Failed to fetch candidate details');
+                updateState({ error: response.message || 'Failed to fetch candidate details' });
             }
         } catch (err) {
             console.error('Error fetching candidate details:', err);
-            throw err;
+            updateState({ error: 'Failed to fetch candidate details' });
+        } finally {
+            updateState({ loading: false });
         }
-    }, []);
-
-    // Get statistics
-    const getStatistics = useCallback(async () => {
-        try {
-            const response = await candidatesService.getCandidatesStatistics();
-
-            if (response.success) {
-                updateState({ statistics: response.data });
-            } else {
-                console.error('Failed to fetch statistics:', response.message);
-            }
-        } catch (err) {
-            console.error('Error fetching statistics:', err);
-        }
-    }, [updateState]);
-
-    // Load candidates for comparison with filters
-    const loadCandidatesForComparison = useCallback(async (filters: ComparisonFilters = {}) => {
-        try {
-            updateState({ comparisonLoading: true, comparisonError: null });
-
-            const response = await candidatesService.getCandidatesForComparison(filters);
-
-            if (response.success) {
-                updateState({
-                    comparisonCandidates: response.data || [],
-                    comparisonLoading: false
-                });
-            } else {
-                updateState({
-                    comparisonError: response.message || 'Failed to load candidates for comparison',
-                    comparisonLoading: false
-                });
-            }
-        } catch (err) {
-            console.error('Error loading candidates for comparison:', err);
-            updateState({
-                comparisonError: 'Failed to load candidates for comparison',
-                comparisonLoading: false
-            });
-        }
-    }, [updateState]);
-
-    // Compare two candidates
-    const compareCandidates = useCallback(async (candidate1Slug: string, candidate2Slug: string) => {
-        try {
-            updateState({ comparisonLoading: true, comparisonError: null });
-
-            const response = await candidatesService.compareCandidates({
-                candidate1_slug: candidate1Slug,
-                candidate2_slug: candidate2Slug
-            });
-
-            if (response.success) {
-                updateState({
-                    comparisonData: response.data,
-                    comparisonLoading: false
-                });
-            } else {
-                updateState({
-                    comparisonError: response.message || 'Failed to compare candidates',
-                    comparisonLoading: false
-                });
-            }
-        } catch (err) {
-            console.error('Error comparing candidates:', err);
-            updateState({
-                comparisonError: 'Failed to compare candidates',
-                comparisonLoading: false
-            });
-        }
-    }, [updateState]);
-
-    // Clear comparison data
-    const clearComparison = useCallback(() => {
-        updateState({
-            comparisonData: null,
-            comparisonError: null,
-            comparisonLoading: false
-        });
     }, [updateState]);
 
     // Clear search results
@@ -367,54 +178,16 @@ export const useCandidates = (): UseCandidatesReturn => {
 
     // Clear error
     const clearError = useCallback(() => {
-        updateState({ error: null, comparisonError: null });
+        updateState({ error: null });
     }, [updateState]);
-
-    // Reset all data
-    const resetData = useCallback(() => {
-        setState({
-            candidatesData: {
-                presidential: [],
-                governors: [],
-                senators: [],
-                mps: [],
-                mcas: [],
-                women_reps: []
-            },
-            searchResults: null,
-            filterOptions: {
-                counties: [],
-                constituencies: [],
-                parties: []
-            },
-            loading: false,
-            searchLoading: false,
-            error: null,
-            categoryLoading: {},
-            statistics: null,
-
-            // Reset comparison state
-            comparisonCandidates: [],
-            comparisonData: null,
-            comparisonLoading: false,
-            comparisonError: null
-        });
-    }, []);
 
     return {
         ...state,
-        fetchInitialData,
+        fetchCandidates,
         searchCandidates,
-        getCandidatesByCategory,
-        loadMoreCandidates,
         getCandidateDetails,
-        getStatistics,
-        loadCandidatesForComparison,
-        compareCandidates,
-        clearComparison,
         clearSearch,
         clearError,
-        resetData
     };
 };
 
@@ -461,35 +234,6 @@ export const useCandidateSearch = () => {
         clearFilters,
         clearQuery,
         clearAll
-    };
-};
-
-// Hook specifically for candidate comparison
-export const useCandidateComparison = () => {
-    const [selectedCandidates, setSelectedCandidates] = useState<[string | null, string | null]>([null, null]);
-    const [comparisonFilters, setComparisonFilters] = useState<ComparisonFilters>({});
-
-    const selectCandidate = useCallback((index: 0 | 1, candidateSlug: string | null) => {
-        setSelectedCandidates(prev => {
-            const newSelection: [string | null, string | null] = [...prev];
-            newSelection[index] = candidateSlug;
-            return newSelection;
-        });
-    }, []);
-
-    const clearSelection = useCallback(() => {
-        setSelectedCandidates([null, null]);
-    }, []);
-
-    const canCompare = selectedCandidates[0] && selectedCandidates[1];
-
-    return {
-        selectedCandidates,
-        selectCandidate,
-        clearSelection,
-        canCompare,
-        comparisonFilters,
-        setComparisonFilters
     };
 };
 

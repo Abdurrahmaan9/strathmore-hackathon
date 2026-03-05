@@ -218,7 +218,7 @@ const SinglePartyPage: React.FC = () => {
                                 />
                             ) : (
                                 <div className={`w-full h-full ${partyColor} rounded-full flex items-center justify-center`}>
-                                    <span className="text-4xl font-bold text-white">
+                                    <span className="text-4xl font-bold text-black">
                                         {party.abbreviation?.charAt(0) || party.name.charAt(0)}
                                     </span>
                                 </div>
@@ -229,11 +229,11 @@ const SinglePartyPage: React.FC = () => {
                             {party.name} {party.abbreviation && `(${party.abbreviation})`}
                         </h1>
                         {party.slogan && (
-                            <p className="text-lg text-gray-600 italic mb-8">"{party.slogan}"</p>
+                            <p className="text-lg text-black italic mb-8">"{party.slogan}"</p>
                         )}
 
                         {/* Party Stats */}
-                        <div className={`${partyColor} text-white rounded-lg p-6 max-w-md mx-auto`}>
+                        <div className={`${partyColor} text-black rounded-lg p-6 max-w-md mx-auto`}>
                             <div className="space-y-3">
                                 {party.founded_year && (
                                     <div className="flex justify-between items-center border-b border-white border-opacity-30 pb-2">
@@ -267,14 +267,14 @@ const SinglePartyPage: React.FC = () => {
                                             href={party.website}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center text-white hover:text-gray-200"
+                                            className="flex items-center text-black hover:text-gray-200"
                                         >
                                             <Globe className="w-4 h-4 mr-1" />
                                             Website
                                         </a>
                                     )}
                                     {party.headquarters && (
-                                        <div className="flex items-center text-white">
+                                        <div className="flex items-center text-black">
                                             <Building className="w-4 h-4 mr-1" />
                                             {party.headquarters}
                                         </div>
@@ -336,7 +336,7 @@ const SinglePartyPage: React.FC = () => {
             <div className="border border-gray-200 rounded-lg mb-4 overflow-hidden">
                 <button
                     onClick={() => togglePolicyExpansion(policy.category)}
-                    className={`w-full px-6 py-4 ${partyColor} text-white text-left hover:opacity-90 transition-opacity flex items-center justify-between`}
+                    className={`w-full px-6 py-4 ${partyColor} text-black text-left hover:opacity-90 transition-opacity flex items-center justify-between`}
                 >
                     <span className="font-medium">{policy.category}</span>
                     {isExpanded ? (
@@ -352,7 +352,7 @@ const SinglePartyPage: React.FC = () => {
                             <h4 className="font-semibold text-gray-900 mb-2">Party Stance:</h4>
                             <p className="text-gray-700 mb-2">{policy.stance}</p>
                             {policy.details && (
-                                <p className="text-gray-600 text-sm">{policy.details}</p>
+                                <p className="text-black text-sm">{policy.details}</p>
                             )}
                         </div>
 
@@ -403,7 +403,7 @@ const SinglePartyPage: React.FC = () => {
                 )}
             </div>
             <h3 className="font-bold text-gray-900 mb-1">{candidate.name}</h3>
-            <p className="text-sm text-gray-600 mb-1">{candidate.position}</p>
+            <p className="text-sm text-black mb-1">{candidate.position}</p>
             {candidate.county && (
                 <p className="text-xs text-gray-500">{candidate.county}</p>
             )}
@@ -425,13 +425,13 @@ const SinglePartyPage: React.FC = () => {
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                            <span className="text-6xl font-bold text-white opacity-50">
+                            <span className="text-6xl font-bold text-black opacity-50">
                                 {party?.abbreviation || 'PARTY'}
                             </span>
                         </div>
                     )}
                     <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-                        <div className="p-6 text-white">
+                        <div className="p-6 text-black">
                             <h3 className="text-xl font-bold mb-2">{event.title}</h3>
                             <div className="space-y-1">
                                 <p className="text-sm opacity-90">
@@ -461,7 +461,7 @@ const SinglePartyPage: React.FC = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-medium text-gray-900 mb-1">{item.title}</h4>
-                    <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                    <p className="text-sm text-black mb-2">{item.description}</p>
                     <div className="flex items-center justify-between">
                         <span className="text-xs text-gray-500">
                             {new Date(item.published_date).toLocaleDateString()}
@@ -487,7 +487,7 @@ const SinglePartyPage: React.FC = () => {
                     <Breadcrumb pageTitle='Loading...' />
                     <div className="flex items-center justify-center py-16">
                         <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                        <span className="ml-3 text-gray-600">Loading party profile...</span>
+                        <span className="ml-3 text-black">Loading party profile...</span>
                     </div>
                 </div>
             </MainLayout>
@@ -501,10 +501,10 @@ const SinglePartyPage: React.FC = () => {
                     <div className="text-center">
                         <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
                         <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
-                        <p className="text-gray-600 mb-4">{error}</p>
+                        <p className="text-black mb-4">{error}</p>
                         <button
                             onClick={() => slug && loadPartyData(slug as string)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-700"
                         >
                             Try Again
                         </button>
@@ -523,7 +523,7 @@ const SinglePartyPage: React.FC = () => {
                         <div className="text-center">
                             <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <h2 className="text-2xl font-bold text-gray-900 mb-4">Party Not Found</h2>
-                            <p className="text-gray-600">The requested party profile could not be found.</p>
+                            <p className="text-black">The requested party profile could not be found.</p>
                         </div>
                     </div>
                 </div>
@@ -547,7 +547,7 @@ const SinglePartyPage: React.FC = () => {
                 {loading ? (
                     <div className="flex items-center justify-center py-16">
                         <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                        <span className="ml-3 text-gray-600">Loading party profile...</span>
+                        <span className="ml-3 text-black">Loading party profile...</span>
                     </div>
                 ) : (
                     <>
@@ -627,7 +627,7 @@ const SinglePartyPage: React.FC = () => {
                                     {mediaItems.length > 0 && (
                                         <div className="bg-white rounded-lg p-6">
                                             <h3 className="text-xl font-bold text-gray-900 mb-4">Media</h3>
-                                            <p className="text-gray-600 mb-6">
+                                            <p className="text-black mb-6">
                                                 Catch up on speeches, interviews, and campaign videos shared by the party
                                             </p>
 
@@ -652,7 +652,7 @@ const SinglePartyPage: React.FC = () => {
                                             <h3 className="text-xl font-medium text-gray-900 mb-2">
                                                 No Additional Information Available
                                             </h3>
-                                            <p className="text-gray-600">
+                                            <p className="text-black">
                                                 Detailed information about candidates, policies, and events will be displayed here when available.
                                             </p>
                                         </div>

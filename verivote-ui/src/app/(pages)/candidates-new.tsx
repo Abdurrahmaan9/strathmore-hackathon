@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Loader2, AlertCircle, TrendingUp, TrendingDown, DollarSign, Users } from 'lucide-react';
 import MainLayout from '@/components/layouts/main-layout';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import useCandidates from '../../../hooks/use-candidates';
-import { BaseCandidate, RiskLevel, RISK_LEVEL_COLORS } from '../../../types/api';
+import useCandidates from '@/hooks/use-candidates';
+import { BaseCandidate, RiskLevel, RISK_LEVEL_COLORS } from '@/types/api';
 
 const CandidatesPage: React.FC = () => {
     const [isClient, setIsClient] = useState(false);
@@ -32,23 +32,6 @@ const CandidatesPage: React.FC = () => {
         setIsClient(true);
         fetchCandidates();
     }, [fetchCandidates]);
-
-    // Add ESC key handler to close modal
-    useEffect(() => {
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && selectedCandidate) {
-                setSelectedCandidate(null);
-            }
-        };
-
-        if (selectedCandidate) {
-            document.addEventListener('keydown', handleEscape);
-        }
-
-        return () => {
-            document.removeEventListener('keydown', handleEscape);
-        };
-    }, [selectedCandidate]);
 
     const handleSearch = async () => {
         if (!isClient) return;
@@ -251,7 +234,7 @@ const CandidatesPage: React.FC = () => {
                                 <div className="text-center py-12">
                                     <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                                     <h3 className="text-lg font-medium text-gray-900 mb-2">No candidates found</h3>
-                                    <p className="text-black mt-2">Monitor and analyze candidate integrity and campaign finance</p>
+                                    <p className="text-black">Try adjusting your search or filters</p>
                                 </div>
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -285,23 +268,23 @@ const CandidatesPage: React.FC = () => {
                                                                 }}
                                                             />
                                                         </div>
-                                                    <span className="text-sm font-medium text-black-force">{candidate.integrity_score}%</span>
+                                                        <span className="text-sm font-medium">{candidate.integrity_score}%</span>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Total Spend</span>
-                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.total_spend)}</span>
+                                                    <span className="text-sm font-medium">{formatCurrency(candidate.total_spend)}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Digital Spend</span>
-                                                    <span className="text-sm font-medium text-black-force">{formatCurrency(candidate.digital_spend)}</span>
+                                                    <span className="text-sm font-medium">{formatCurrency(candidate.digital_spend)}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Donors</span>
-                                                    <span className="text-sm font-medium text-black-force">{candidate.donor_count}</span>
+                                                    <span className="text-sm font-medium">{candidate.donor_count}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
@@ -319,17 +302,10 @@ const CandidatesPage: React.FC = () => {
 
                 {/* Candidate Details Modal */}
                 {selectedCandidate && candidateDetails && (
-                    <div 
-                        className="fixed inset-0 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
-                        onClick={(e) => {
-                            if (e.target === e.currentTarget) {
-                                setSelectedCandidate(null);
-                            }
-                        }}
-                    >
-                        <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto transform transition-all" onClick={(e) => e.stopPropagation()}>
-                            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl">
-                                <div className="flex justify-between items-start">
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                            <div className="p-6">
+                                <div className="flex justify-between items-start mb-6">
                                     <div>
                                         <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.name}</h2>
                                         <span
@@ -340,59 +316,55 @@ const CandidatesPage: React.FC = () => {
                                     </div>
                                     <button
                                         onClick={() => setSelectedCandidate(null)}
-                                        className="text-gray-400 hover:text-black transition-colors p-1 rounded-lg hover:bg-gray-100"
+                                        className="text-gray-400 hover:text-black"
                                     >
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
+                                        ×
                                     </button>
                                 </div>
-                            </div>
 
-                            <div className="p-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <h3 className="text-lg font-semibold mb-4 text-black-force">Financial Summary</h3>
+                                        <h3 className="text-lg font-semibold mb-4 text-blue-600">Financial Summary</h3>
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.total_spend)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.total_spend)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Digital Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(typeof candidateDetails.digital_spend === 'object' ? candidateDetails.digital_spend.total : candidateDetails.digital_spend || 0)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.digital_spend.total)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Physical Spend</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.physical_spend)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.physical_spend)}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-semibold mb-4 text-black-force">Donor Summary</h3>
+                                        <h3 className="text-lg font-semibold mb-4 text-blue-600">Donor Summary</h3>
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Donors</span>
-                                                <span className="font-medium text-black-force">{candidateDetails.donors?.total_count || 0}</span>
+                                                <span className="font-medium text-black">{candidateDetails.donors.total_count}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Amount</span>
-                                                <span className="font-medium text-black-force">{formatCurrency(candidateDetails.donors?.total_amount || 0)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.donors.total_amount)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">High Risk Donors</span>
-                                                <span className="font-medium text-red-600">{candidateDetails.donors?.high_risk_count || 0}</span>
+                                                <span className="font-medium text-red-600">{candidateDetails.donors.high_risk_count}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {(candidateDetails.red_flags?.length || 0) > 0 && (
+                                {candidateDetails.red_flags.length > 0 && (
                                     <div className="mt-6">
                                         <h3 className="text-lg font-semibold mb-4 text-red-600">Red Flags</h3>
                                         <ul className="space-y-2">
-                                            {candidateDetails.red_flags?.map((flag, index) => (
+                                            {candidateDetails.red_flags.map((flag, index) => (
                                                 <li key={index} className="flex items-center gap-2 text-red-600">
                                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                                                     <span>{flag}</span>

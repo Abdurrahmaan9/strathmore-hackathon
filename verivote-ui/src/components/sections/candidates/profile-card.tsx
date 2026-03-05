@@ -37,7 +37,7 @@ export const CandidateProfileCard: React.FC<CandidateProfileCardProps> = ({
                         />
                     ) : (
                         <div className="w-full h-full bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center">
-                            <User className="w-20 h-20 text-white" />
+                            <User className="w-20 h-20 text-black" />
                         </div>
                     )}
                 </div>
@@ -46,16 +46,16 @@ export const CandidateProfileCard: React.FC<CandidateProfileCardProps> = ({
                 <div className="mb-4">
                     <h1 className="text-2xl font-bold text-gray-800 mb-2">
                         {candidate.name}
-                        <span className="text-lg font-normal text-gray-600 ml-3">
+                        <span className="text-lg font-normal text-black ml-3">
                             {candidate.gender}, {candidate.age}
                         </span>
                     </h1>
-                    <p className="text-lg text-gray-600 mb-3">{candidate.candidacy}</p>
+                    <p className="text-lg text-black mb-3">{candidate.candidacy}</p>
 
                     {/* Party Info */}
                     <div className="flex items-center justify-center space-x-2">
                         <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs font-bold">K</span>
+                            <span className="text-black text-xs font-bold">K</span>
                         </div>
                         <span className="text-gray-700">{candidate.party}</span>
                     </div>
@@ -71,13 +71,13 @@ export const CandidateProfileCard: React.FC<CandidateProfileCardProps> = ({
                     </button>
                     <button
                         onClick={onBookmark}
-                        className={`p-2 rounded-full transition-colors ${isBookmarked ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                        className={`p-2 rounded-full transition-colors ${isBookmarked ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-black hover:bg-gray-200'}`}
                     >
                         <Bookmark className="w-5 h-5" />
                     </button>
                     <button
                         onClick={onShare}
-                        className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200 transition-colors"
+                        className="p-2 bg-gray-100 text-black rounded-full hover:bg-gray-200 transition-colors"
                     >
                         <Share2 className="w-5 h-5" />
                     </button>

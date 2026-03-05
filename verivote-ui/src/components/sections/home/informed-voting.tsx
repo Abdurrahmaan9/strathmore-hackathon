@@ -31,7 +31,7 @@ const InformedVoting: React.FC = () => {
               Your Source for Informed Voting
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-              Verivote empowers you to make informed choices by providing easy access to reliable candidate information.
+              VOTE-TRACE KENYA empowers you to make informed choices by providing easy access to reliable candidate information.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ const InformedVoting: React.FC = () => {
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-black leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -66,7 +66,7 @@ const InformedVoting: React.FC = () => {
           <div className="mb-8 md:mb-12">
             <Link 
               href="/research"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 md:px-12 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-black font-semibold py-4 px-8 md:px-12 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
             >
               Start Your Research
             </Link>

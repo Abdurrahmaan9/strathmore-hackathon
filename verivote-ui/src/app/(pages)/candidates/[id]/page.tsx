@@ -344,7 +344,7 @@ const SingleCandidatePage: React.FC = () => {
             case 'c': return 'text-yellow-600 bg-yellow-100';
             case 'd': return 'text-orange-600 bg-orange-100';
             case 'f': return 'text-red-600 bg-red-100';
-            default: return 'text-gray-600 bg-gray-100';
+            default: return 'text-black bg-gray-100';
         }
     };
 
@@ -367,7 +367,7 @@ const SingleCandidatePage: React.FC = () => {
         <div className="mb-3">
             <button
                 onClick={() => onToggle(id)}
-                className="w-full bg-blue-600 text-white p-4 rounded-lg flex justify-between items-center hover:bg-blue-700 transition-colors"
+                className="w-full bg-blue-600 text-black p-4 rounded-lg flex justify-between items-center hover:bg-blue-700 transition-colors"
                 aria-expanded={isExpanded}
                 aria-controls={`section-${id}`}
             >
@@ -397,13 +397,13 @@ const SingleCandidatePage: React.FC = () => {
                     <div className="bg-white p-4 rounded-lg border border-blue-200">
                         {policy.policy_description && (
                             <div className="mb-3">
-                                <span className="text-sm font-medium text-gray-600">Policy Description:</span>
+                                <span className="text-sm font-medium text-black">Policy Description:</span>
                                 <p className="text-gray-800 mt-1">{policy.policy_description}</p>
                             </div>
                         )}
                         {policy.key_points && (
                             <div className="mb-3">
-                                <span className="text-sm font-medium text-gray-600">Key Points:</span>
+                                <span className="text-sm font-medium text-black">Key Points:</span>
                                 <p className="text-gray-800 mt-1">{policy.key_points}</p>
                             </div>
                         )}
@@ -442,7 +442,7 @@ const SingleCandidatePage: React.FC = () => {
                     style={{ width: `${Math.min(percentage, 100)}%` }}
                 />
             </div>
-            <div className="text-sm font-medium text-gray-600 min-w-[4rem]">
+            <div className="text-sm font-medium text-black min-w-[4rem]">
                 {score.toFixed(1)}/{maxScore}
             </div>
         </div>
@@ -455,7 +455,7 @@ const SingleCandidatePage: React.FC = () => {
                 <div className="min-h-screen flex items-center justify-center bg-gray-50">
                     <div className="text-center">
                         <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
-                        <p className="text-gray-600">Loading candidate details...</p>
+                        <p className="text-black">Loading candidate details...</p>
                         <p className="text-sm text-gray-500 mt-2">Slug: {slug}</p>
                     </div>
                 </div>
@@ -471,19 +471,19 @@ const SingleCandidatePage: React.FC = () => {
                     <div className="text-center">
                         <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
                         <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
-                        <p className="text-gray-600 mb-4">{error}</p>
+                        <p className="text-black mb-4">{error}</p>
                         <p className="text-sm text-gray-500 mb-4">Attempted slug: {slug}</p>
                         <div className="space-x-4">
                             <button
                                 onClick={() => router.back()}
-                                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                                className="px-4 py-2 bg-gray-600 text-black rounded-lg hover:bg-gray-700"
                             >
                                 <ArrowLeft className="w-4 h-4 inline mr-2" />
                                 Go Back
                             </button>
                             <button
                                 onClick={() => window.location.reload()}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-700"
                             >
                                 Try Again
                             </button>
@@ -533,7 +533,7 @@ const SingleCandidatePage: React.FC = () => {
                                             target.style.display = 'none';
                                             target.parentElement!.innerHTML = `
                                                 <div class="w-full h-full bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center">
-                                                    <div class="w-20 h-20 text-white">
+                                                    <div class="w-20 h-20 text-black">
                                                         <svg class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
                                                             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                                                         </svg>
@@ -544,7 +544,7 @@ const SingleCandidatePage: React.FC = () => {
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center">
-                                        <User className="w-20 h-20 text-white" />
+                                        <User className="w-20 h-20 text-black" />
                                     </div>
                                 )}
                             </div>
@@ -554,12 +554,12 @@ const SingleCandidatePage: React.FC = () => {
                                 <h1 className="text-2xl font-bold text-gray-800 mb-2">
                                     {candidate.name}
                                     {age && (
-                                        <span className="text-lg font-normal text-gray-600 ml-3">
+                                        <span className="text-lg font-normal text-black ml-3">
                                             {candidate.gender}, {age}
                                         </span>
                                     )}
                                 </h1>
-                                <p className="text-lg text-gray-600 mb-3">{candidate.position}</p>
+                                <p className="text-lg text-black mb-3">{candidate.position}</p>
 
                                 {/* Party Info */}
                                 <div className="flex items-center justify-center space-x-2 mb-2">
@@ -575,7 +575,7 @@ const SingleCandidatePage: React.FC = () => {
                                         />
                                     ) : (
                                         <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                                            <span className="text-white text-xs font-bold">
+                                            <span className="text-black text-xs font-bold">
                                                 {candidate.party?.code?.charAt(0) || '?'}
                                             </span>
                                         </div>
@@ -635,7 +635,7 @@ const SingleCandidatePage: React.FC = () => {
                                     disabled={bookmarkLoading}
                                     className={`p-2 rounded-full transition-colors ${isBookmarked
                                         ? 'bg-yellow-100 text-yellow-600'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        : 'bg-gray-100 text-black hover:bg-gray-200'
                                         } ${bookmarkLoading ? 'opacity-50' : ''}`}
                                     aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
                                 >
@@ -647,7 +647,7 @@ const SingleCandidatePage: React.FC = () => {
                                 </button>
                                 <button
                                     onClick={handleShare}
-                                    className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200 transition-colors"
+                                    className="p-2 bg-gray-100 text-black rounded-full hover:bg-gray-200 transition-colors"
                                     aria-label="Share candidate profile"
                                 >
                                     <Share2 className="w-5 h-5" />
@@ -673,7 +673,7 @@ const SingleCandidatePage: React.FC = () => {
                                                     <div className={`text-2xl font-bold px-4 py-2 rounded-lg ${getGradeColor(scoring.grade.letter)}`}>
                                                         {scoring.grade.letter}
                                                     </div>
-                                                    <p className="text-sm text-gray-600 mt-1">{scoring.grade.description}</p>
+                                                    <p className="text-sm text-black mt-1">{scoring.grade.description}</p>
                                                 </div>
                                             </div>
                                             <ScoreProgressBar
@@ -682,7 +682,7 @@ const SingleCandidatePage: React.FC = () => {
                                                 percentage={scoring.percentage}
                                                 className="mb-2"
                                             />
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-sm text-black">
                                                 {scoring.percentage.toFixed(1)}% - {scoring.grade.description}
                                             </p>
                                         </div>
@@ -694,7 +694,7 @@ const SingleCandidatePage: React.FC = () => {
                                                 <div key={index} className="border rounded-lg p-4">
                                                     <div className="flex items-center justify-between mb-2">
                                                         <span className="font-medium text-gray-800">{category.name}</span>
-                                                        <span className="text-sm text-gray-600">
+                                                        <span className="text-sm text-black">
                                                             Weight: {category.weight_percentage}%
                                                         </span>
                                                     </div>
@@ -733,7 +733,7 @@ const SingleCandidatePage: React.FC = () => {
                                                                         <div className="mt-2 space-y-1">
                                                                             {subcategory.indicators.map((indicator, indicatorIndex) => (
                                                                                 <div key={indicatorIndex} className="flex items-center justify-between text-xs">
-                                                                                    <span className="text-gray-600">{indicator.name}</span>
+                                                                                    <span className="text-black">{indicator.name}</span>
                                                                                     <div className="flex items-center space-x-2">
                                                                                         <span className="font-medium">{indicator.score}/10</span>
                                                                                         {indicator.notes && (
@@ -759,20 +759,20 @@ const SingleCandidatePage: React.FC = () => {
                                             <h4 className="font-semibold text-gray-800 mb-2">Scoring Information</h4>
                                             <div className="grid grid-cols-2 gap-4 text-sm">
                                                 <div>
-                                                    <span className="text-gray-600">Indicators Scored:</span>
+                                                    <span className="text-black">Indicators Scored:</span>
                                                     <span className="font-medium ml-2">
                                                         {scoring.meta.scored_indicators} of {scoring.meta.total_indicators}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-gray-600">Completion:</span>
+                                                    <span className="text-black">Completion:</span>
                                                     <span className="font-medium ml-2">
                                                         {scoring.meta.completion_percentage.toFixed(0)}%
                                                     </span>
                                                 </div>
                                                 {scoring.meta.last_updated && (
                                                     <div className="col-span-2">
-                                                        <span className="text-gray-600">Last Updated:</span>
+                                                        <span className="text-black">Last Updated:</span>
                                                         <span className="font-medium ml-2">
                                                             {new Date(scoring.meta.last_updated).toLocaleDateString()}
                                                         </span>
@@ -813,7 +813,7 @@ const SingleCandidatePage: React.FC = () => {
                                             {candidate.education.map((edu, index) => (
                                                 <div key={index} className="border-l-4 border-blue-400 pl-4">
                                                     <h4 className="font-semibold">{edu.qualification}</h4>
-                                                    <p className="text-gray-600">{edu.institution}</p>
+                                                    <p className="text-black">{edu.institution}</p>
                                                     {edu.field_of_study && (
                                                         <p className="text-sm text-gray-500">{edu.field_of_study}</p>
                                                     )}
@@ -844,7 +844,7 @@ const SingleCandidatePage: React.FC = () => {
                                             {candidate.experience.map((exp, index) => (
                                                 <div key={index} className="border-l-4 border-green-400 pl-4">
                                                     <h4 className="font-semibold">{exp.job_title}</h4>
-                                                    <p className="text-gray-600">{exp.company_name}</p>
+                                                    <p className="text-black">{exp.company_name}</p>
                                                     {exp.location && (
                                                         <p className="text-sm text-gray-500">{exp.location}</p>
                                                     )}
@@ -876,7 +876,7 @@ const SingleCandidatePage: React.FC = () => {
                                                 <div key={index} className="border-l-4 border-purple-400 pl-4">
                                                     <h4 className="font-semibold">{polExp.position}</h4>
                                                     {polExp.party_name && (
-                                                        <p className="text-gray-600">{polExp.party_name}</p>
+                                                        <p className="text-black">{polExp.party_name}</p>
                                                     )}
                                                     {(polExp.start_date || polExp.end_date) && (
                                                         <p className="text-xs text-gray-400">
@@ -936,7 +936,7 @@ const SingleCandidatePage: React.FC = () => {
                                         View Declaration
                                     </a>
                                 ) : (
-                                    <p className="text-sm text-gray-600">Not Available</p>
+                                    <p className="text-sm text-black">Not Available</p>
                                 )}
                             </div>
                         </div>
@@ -952,16 +952,16 @@ const SingleCandidatePage: React.FC = () => {
                                     {/* Campaign Event */}
                                     <div className="bg-red-500 rounded-lg overflow-hidden mb-4 relative">
                                         <div className="h-48 bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center relative">
-                                            <div className="text-white text-6xl font-bold opacity-30 absolute">
+                                            <div className="text-black text-6xl font-bold opacity-30 absolute">
                                                 {candidate.party?.code || '?'}
                                             </div>
-                                            <div className="text-white text-center relative z-10">
+                                            <div className="text-black text-center relative z-10">
                                                 <div className="w-20 h-20 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
                                                     <User className="w-10 h-10" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="bg-red-500 text-white p-4">
+                                        <div className="bg-red-500 text-black p-4">
                                             <div className="text-sm opacity-90 flex items-center mb-1">
                                                 <Calendar className="w-4 h-4 mr-2" />
                                                 Event: <span className="font-medium ml-1">{event.event_title}</span>
@@ -1021,7 +1021,7 @@ const SingleCandidatePage: React.FC = () => {
                                             </span>
                                         )}
                                         {endorsement.endorsement_statement && (
-                                            <p className="text-gray-600 text-sm italic">&quot;{endorsement.endorsement_statement}&quot;</p>
+                                            <p className="text-black text-sm italic">&quot;{endorsement.endorsement_statement}&quot;</p>
                                         )}
                                     </div>
                                 ))}
@@ -1037,7 +1037,7 @@ const SingleCandidatePage: React.FC = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {candidate.website && (
                                         <div>
-                                            <span className="text-sm font-medium text-gray-600">Website:</span>
+                                            <span className="text-sm font-medium text-black">Website:</span>
                                             <a
                                                 href={candidate.website}
                                                 target="_blank"
@@ -1050,7 +1050,7 @@ const SingleCandidatePage: React.FC = () => {
                                     )}
                                     {candidate.email && (
                                         <div>
-                                            <span className="text-sm font-medium text-gray-600">Email:</span>
+                                            <span className="text-sm font-medium text-black">Email:</span>
                                             <a
                                                 href={`mailto:${candidate.email}`}
                                                 className="block text-blue-600 hover:underline break-all"
@@ -1063,7 +1063,7 @@ const SingleCandidatePage: React.FC = () => {
 
                                 {candidate.social_links && Object.keys(candidate.social_links).length > 0 && (
                                     <div className="mt-4">
-                                        <span className="text-sm font-medium text-gray-600 mb-2 block">Social Media:</span>
+                                        <span className="text-sm font-medium text-black mb-2 block">Social Media:</span>
                                         <div className="flex flex-wrap gap-2">
                                             {Object.entries(candidate.social_links).map(([platform, url]) => (
                                                 <a
@@ -1085,12 +1085,12 @@ const SingleCandidatePage: React.FC = () => {
 
                     {/* Compare Candidates CTA */}
                     <section className="text-center py-8">
-                        <p className="text-gray-600 mb-6">
+                        <p className="text-black mb-6">
                             Find out how this candidate compares to other candidates on policies and more
                         </p>
                         <button
                             onClick={handleCompare}
-                            className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors"
+                            className="bg-blue-600 text-black px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors"
                         >
                             Compare Candidates
                         </button>

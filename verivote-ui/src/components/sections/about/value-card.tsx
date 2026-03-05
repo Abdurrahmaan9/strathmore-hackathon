@@ -12,6 +12,6 @@ export const ValueCard = ({ icon, title, description }: ValueCardProps) => (
                 {icon}
             </div>
         </div>
-        <p className="text-gray-600 max-w-xs mx-auto leading-relaxed">{description}</p>
+        <p className="text-black max-w-xs mx-auto leading-relaxed">{description}</p>
     </div>
 );

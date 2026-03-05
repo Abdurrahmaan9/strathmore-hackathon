@@ -293,7 +293,7 @@ const GlobalSearch: React.FC<SearchComponentProps> = ({
                             {(searchQuery || Object.keys(filters).length > 0) && (
                                 <button
                                     onClick={clearSearch}
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 w-4 h-4"
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black w-4 h-4"
                                     aria-label="Clear search"
                                 >
                                     <X className="w-4 h-4" />
@@ -316,7 +316,7 @@ const GlobalSearch: React.FC<SearchComponentProps> = ({
                         <button
                             onClick={handleSearch}
                             disabled={isSearching}
-                            className="px-6 py-2.5 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50"
+                            className="px-6 py-2.5 bg-blue-600 text-black rounded-full font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50"
                         >
                             {isSearching ? (
                                 <>
@@ -336,8 +336,8 @@ const GlobalSearch: React.FC<SearchComponentProps> = ({
                             <button
                                 onClick={() => setShowFilters(!showFilters)}
                                 className={`px-4 py-2.5 rounded-full font-medium transition-colors duration-200 flex items-center space-x-2 ${showFilters || Object.keys(filters).length > 0
-                                    ? 'bg-green-600 text-white hover:bg-green-700'
-                                    : 'bg-green-600 text-white hover:bg-green-700'
+                                    ? 'bg-green-600 text-black hover:bg-green-700'
+                                    : 'bg-green-600 text-black hover:bg-green-700'
                                     }`}
                             >
                                 <Filter className="w-4 h-4" />
@@ -439,7 +439,7 @@ const GlobalSearch: React.FC<SearchComponentProps> = ({
                                                 onSearch(searchQuery, {});
                                             }
                                         }}
-                                        className="px-4 py-2 text-sm text-gray-600 bg-white/90 border border-gray-300/50 rounded-md hover:bg-white hover:border-gray-300 backdrop-blur-sm transition-colors"
+                                        className="px-4 py-2 text-sm text-black bg-white/90 border border-gray-300/50 rounded-md hover:bg-white hover:border-gray-300 backdrop-blur-sm transition-colors"
                                     >
                                         Clear Filters
                                     </button>
@@ -449,7 +449,7 @@ const GlobalSearch: React.FC<SearchComponentProps> = ({
                                             handleSearch();
                                         }}
                                         disabled={isSearching}
-                                        className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 backdrop-blur-sm transition-colors disabled:opacity-50"
+                                        className="px-4 py-2 text-sm bg-blue-600 text-black rounded-md hover:bg-blue-700 backdrop-blur-sm transition-colors disabled:opacity-50"
                                     >
                                         {isSearching ? 'Applying...' : 'Apply'}
                                     </button>

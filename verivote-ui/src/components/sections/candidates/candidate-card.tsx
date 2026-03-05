@@ -42,7 +42,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({ candidate, onClick }) => 
                     />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center">
-                        <User className="w-12 h-12 text-white" />
+                        <User className="w-12 h-12 text-black" />
                     </div>
                 )}
             </div>
@@ -51,7 +51,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({ candidate, onClick }) => 
                 <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-2">
                     {candidate.name}
                 </h3>
-                <p className="text-xs text-gray-600 leading-relaxed mb-1">
+                <p className="text-xs text-black leading-relaxed mb-1">
                     {candidate.party} ({candidate.partyAbbreviation})
                 </p>
                 {candidate.location && (

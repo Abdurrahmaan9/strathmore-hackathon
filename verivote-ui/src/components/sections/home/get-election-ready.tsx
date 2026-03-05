@@ -20,19 +20,19 @@ const GetElectionReady: React.FC = () => {
 
     const commitmentFeatures = [
         {
-            icon: <Shield className="w-12 h-12 md:w-16 md:h-16 text-white" />,
+            icon: <Shield className="w-12 h-12 md:w-16 md:h-16 text-black" />,
             title: "Data Verified",
             description: "We go through a comprehensive verification process to ensure the accuracy of the information you see.",
             bgColor: "bg-blue-600"
         },
         {
-            icon: <Scale className="w-12 h-12 md:w-16 md:h-16 text-white" />,
+            icon: <Scale className="w-12 h-12 md:w-16 md:h-16 text-black" />,
             title: "Non-Partisan",
             description: "We are committed to neutrality. Our platform provides information without political bias.",
             bgColor: "bg-blue-600"
         },
         {
-            icon: <Unlock className="w-12 h-12 md:w-16 md:h-16 text-white" />,
+            icon: <Unlock className="w-12 h-12 md:w-16 md:h-16 text-black" />,
             title: "Open Access",
             description: "All information on our platform is freely available to everyone, promoting transparency in the electoral process.",
             bgColor: "bg-blue-600"
@@ -57,7 +57,7 @@ const GetElectionReady: React.FC = () => {
                             <Link
                                 key={index}
                                 href={resource.href}
-                                className="block w-full max-w-md mx-auto md:max-w-none bg-blue-800 hover:bg-blue-900 text-white font-semibold py-4 md:py-6 px-6 md:px-8 rounded-lg md:rounded-xl transition-all duration-200 shadow-md hover:shadow-xl transform hover:-translate-y-1"
+                                className="block w-full max-w-md mx-auto md:max-w-none bg-blue-800 hover:bg-blue-900 text-black font-semibold py-4 md:py-6 px-6 md:px-8 rounded-lg md:rounded-xl transition-all duration-200 shadow-md hover:shadow-xl transform hover:-translate-y-1"
                             >
                                 <span className="text-base md:text-lg">{resource.title}</span>
                             </Link>
@@ -91,7 +91,7 @@ const GetElectionReady: React.FC = () => {
                                 <div className="flex justify-center mb-4 md:mb-8">
                                     <div className={`w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 ${feature.bgColor} rounded-2xl md:rounded-3xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105`}>
                                         {React.cloneElement(feature.icon, {
-                                            className: "w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-white"
+                                            className: "w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-black"
                                         })}
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@ const GetElectionReady: React.FC = () => {
                             {/* Avatar */}
                             <div className="flex-shrink-0">
                                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gray-400 rounded-full flex items-center justify-center shadow-md">
-                                    <span className="text-white font-bold text-sm md:text-lg">AU</span>
+                                    <span className="text-black font-bold text-sm md:text-lg">AU</span>
                                 </div>
                             </div>
 
@@ -127,7 +127,7 @@ const GetElectionReady: React.FC = () => {
                                     Anonymous User
                                 </h4>
                                 <p className="text-sm md:text-lg lg:text-xl text-gray-700 leading-relaxed mb-2 md:mb-4 italic">
-                                    {`"Verivote has become my go-to source for reliable candidate information. I trust the data, and it has made me a more informed voter."`}
+                                    {`"VOTE-TRACE KENYA has become my go-to source for reliable candidate information. I trust the data, and it has made me a more informed voter."`}
                                 </p>
                                 <p className="text-xs md:text-sm lg:text-base text-gray-500 italic">
                                     3rd April, 2025
@@ -141,7 +141,7 @@ const GetElectionReady: React.FC = () => {
                 <div className="text-center">
                     <Link
                         href="/candidates"
-                        className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 md:py-6 md:px-16 lg:py-8 lg:px-20 rounded-full text-base md:text-xl lg:text-2xl transition-all duration-200 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105"
+                        className="inline-block bg-blue-600 hover:bg-blue-700 text-black font-semibold py-4 px-8 md:py-6 md:px-16 lg:py-8 lg:px-20 rounded-full text-base md:text-xl lg:text-2xl transition-all duration-200 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105"
                     >
                         Explore Candidates Now
                     </Link>

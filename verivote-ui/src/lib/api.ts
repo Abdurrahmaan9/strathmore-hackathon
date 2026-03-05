@@ -11,15 +11,17 @@ interface ApiConfig {
         'Content-Type': string;
         Accept: string;
     };
+    withCredentials?: boolean;
 }
 
 const API_CONFIG: ApiConfig = {
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api`,
+    baseURL: process.env.NEXT_PUBLIC_API_URL ?? '/api/proxy',
     timeout: 30000, // 30 seconds
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
     },
+    withCredentials: false, // Important for CORS
 };
 
 // Create axios instance
@@ -162,82 +164,64 @@ const handleApiResponse = async <T>(apiCall: Promise<any>): Promise<any> => {
     }
 };
 
-// API endpoints structure - CORRECTED
+// API endpoints structure - VoteTrace360
 interface ApiEndpoints {
     candidates: {
         getAll: string;
-        search: string;
-        getByCategory: (category: string) => string;
-        getBySlug: (slug: string) => string;
-        statistics: string;
-        forComparison: string;
-        compare: string;
+        getSummary: (id: string | number) => string;
     };
-    counties: {
-        getAll: string;
-        getById: (id: string | number) => string;
-        getConstituencies: (countyId: string | number) => string;
-        getWards: (constituencyId: string | number) => string;
+    digital: {
+        getCandidateBreakdown: (candidateId: string | number) => string;
+        import: string;
+        addRecord: string;
+    };
+    donors: {
+        getCandidateDonors: (candidateId: string | number) => string;
+        upload: string;
+        addRecord: string;
+    };
+    health: {
+        reconciliation: string;
+        digital: string;
+        donors: string;
     };
     parties: {
         getAll: string;
         search: string;
-        featured: string;
-        statistics: string;
+        getFeatured: string;
+        getDetails: (slug: string) => string;
+        getStatistics: string;
         compare: string;
-        getById: (id: string | number) => string;
-        getBySlug: (slug: string) => string;
-        getCandidates: (slug: string) => string;
-        getPolicyPositions: (slug: string) => string;
-        getMediaContent: (slug: string) => string;
-        getCampaignEvents: (slug: string) => string;
-        getActive: string;
-    };
-    auth: {
-        login: string;
-        logout: string;
-        register: string;
-        profile: string;
-        refresh: string;
     };
 }
 
 const API_ENDPOINTS: ApiEndpoints = {
     candidates: {
-        getAll: '/candidates',
-        search: '/candidates/search',
-        getByCategory: (category: string) => `/candidates/category/${category}`,
-        getBySlug: (slug: string) => `/candidates/${slug}`,
-        statistics: '/candidates/statistics',
-        forComparison: '/candidates/for-comparison',
-        compare: '/candidates/compare',
+        getAll: 'candidates',
+        getSummary: (id: string | number) => `candidates/${id}/summary`,
     },
-    counties: {
-        getAll: '/counties',
-        getById: (id: string | number) => `/counties/${id}`,
-        getConstituencies: (countyId: string | number) => `/counties/${countyId}/constituencies`,
-        getWards: (constituencyId: string | number) => `/constituencies/${constituencyId}/wards`,
+    digital: {
+        getCandidateBreakdown: (candidateId: string | number) => `digital/${candidateId}`,
+        import: 'digital/import',
+        addRecord: 'digital/record',
+    },
+    donors: {
+        getCandidateDonors: (candidateId: string | number) => `donors/${candidateId}`,
+        upload: 'donors/upload',
+        addRecord: 'donors/record',
+    },
+    health: {
+        reconciliation: 'health/reconciliation',
+        digital: 'health/digital',
+        donors: 'health/donors',
     },
     parties: {
-        getAll: '/parties',
-        search: '/parties/search',
-        featured: '/parties/featured',
-        statistics: '/parties/statistics',
-        compare: '/parties/compare',
-        getById: (id: string | number) => `/parties/${id}`,
-        getBySlug: (slug: string) => `/parties/${slug}`,
-        getCandidates: (slug: string) => `/parties/${slug}/candidates`,
-        getPolicyPositions: (slug: string) => `/parties/${slug}/policies`,
-        getMediaContent: (slug: string) => `/parties/${slug}/media`,
-        getCampaignEvents: (slug: string) => `/parties/${slug}/events`,
-        getActive: '/parties?status=active',
-    },
-    auth: {
-        login: '/auth/login',
-        logout: '/auth/logout',
-        register: '/auth/register',
-        profile: '/auth/profile',
-        refresh: '/auth/refresh',
+        getAll: 'parties',
+        search: 'parties/search',
+        getFeatured: 'parties/featured',
+        getDetails: (slug: string) => `parties/${slug}`,
+        getStatistics: 'parties/statistics',
+        compare: 'parties/compare',
     },
 };
 
