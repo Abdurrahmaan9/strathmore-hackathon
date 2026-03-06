@@ -19,7 +19,7 @@ const ComparePage: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isClient, setIsClient] = useState(false);
-    const [selectedCandidates, setSelectedCandidates] = useState<ComparisonCandidate[]>([null, null]);
+    const [selectedCandidates, setSelectedCandidates] = useState<ComparisonCandidate[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showFilters, setShowFilters] = useState(false);
