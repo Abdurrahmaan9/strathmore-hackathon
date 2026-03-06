@@ -5,6 +5,7 @@ import MainLayout from '@/components/layouts/main-layout';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import GlobalSearch from '@/components/common/global-search';
 import { CategoryConfig, Candidate } from '@/types/candidate.types';
+import { BaseCandidate } from '@/types/api';
 
 // Extend ActiveCategory type to include 'all'
 type ActiveCategory = 'all' | 'presidential' | 'governors' | 'senators' | 'mps' | 'mcas' | 'women_reps';
@@ -16,16 +17,13 @@ const CandidatesPage: React.FC = () => {
 
     // Custom hooks for candidates data and search
     const {
-        candidatesData,
+        candidates,
         searchResults,
-        filterOptions,
         loading,
         searchLoading,
         error,
-        categoryLoading,
-        fetchInitialData,
+        fetchCandidates,
         searchCandidates,
-        loadMoreCandidates,
         clearSearch,
         clearError
     } = useCandidates();
@@ -106,8 +104,8 @@ const CandidatesPage: React.FC = () => {
     // Set client-side flag and load initial data
     useEffect(() => {
         setIsClient(true);
-        fetchInitialData();
-    }, [fetchInitialData]);
+        fetchCandidates();
+    }, [fetchCandidates]);
 
     // Handle search from GlobalSearch component
     const handleSearch = async (query: string, filters?: any) => {
@@ -180,13 +178,9 @@ const CandidatesPage: React.FC = () => {
     };
 
     // Toggle show all candidates for a category
-    const toggleShowAll = async (categoryKey: string) => {
+    const toggleShowAll = (categoryKey: string) => {
         if (!isClient) return;
         const isCurrentlyShowingAll = showAllCandidates[categoryKey];
-
-        if (!isCurrentlyShowingAll) {
-            await loadMoreCandidates(categoryKey);
-        }
 
         setShowAllCandidates(prev => ({
             ...prev,
@@ -205,11 +199,18 @@ const CandidatesPage: React.FC = () => {
     // Handle try again
     const handleTryAgain = () => {
         if (!isClient) return;
-        fetchInitialData();
+        fetchCandidates();
+    };
+
+    // Helper function to filter candidates by position
+    const getCandidatesByPosition = (position: string): BaseCandidate[] => {
+        return candidates.filter(candidate => 
+            candidate.position?.toLowerCase() === position.toLowerCase()
+        );
     };
 
     // Get displayed candidates based on show all state and active category
-    const getDisplayedCandidates = (categoryKey: string, candidates: Candidate[]) => {
+    const getDisplayedCandidates = (categoryKey: string, candidates: BaseCandidate[]) => {
         // If a specific category is active and it's not the current category, don't show
         if (activeCategory !== 'all' && activeCategory !== categoryKey) {
             return [];
@@ -233,24 +234,17 @@ const CandidatesPage: React.FC = () => {
     };
 
     // Helper function to format candidate data for display
-    const formatCandidateForDisplay = (candidate: any): Candidate => {
+    const formatCandidateForDisplay = (candidate: BaseCandidate): Candidate => {
         return {
             ...candidate,
-            party: typeof candidate.party === 'object' && candidate.party?.party_name
-                ? candidate.party.party_name
-                : candidate.party || 'Independent',
-            partyAbbreviation: typeof candidate.party === 'object' && candidate.party?.party_code
-                ? candidate.party.party_code
-                : candidate.partyAbbreviation || 'IND',
-            partyLogo: typeof candidate.party === 'object' && candidate.party?.party_logo
-                ? candidate.party.party_logo
-                : candidate.partyLogo || null,
-            location: typeof candidate.county === 'object' && candidate.county?.county
-                ? candidate.county.county
-                : candidate.location || null,
-            constituency: typeof candidate.county === 'object' && candidate.county?.constituency
-                ? candidate.county.constituency
-                : candidate.constituency || null
+            id: candidate.id.toString(),
+            first_name: candidate.name.split(' ')[0] || '',
+            last_name: candidate.name.split(' ').slice(1).join(' ') || '',
+            party: candidate.party || 'Independent',
+            partyAbbreviation: candidate.party?.substring(0, 3).toUpperCase() || 'IND',
+            location: candidate.constituency || '',
+            image: '/api/placeholder/150/150',
+            slug: candidate.id.toString()
         };
     };
 
@@ -278,7 +272,7 @@ const CandidatesPage: React.FC = () => {
     // Component: Category Section with improved filtering
     const CategorySection: React.FC<{
         category: CategoryConfig;
-        candidates: Candidate[];
+        candidates: BaseCandidate[];
         showViewAll?: boolean;
     }> = ({ category, candidates, showViewAll = true }) => {
         const displayedCandidates = getDisplayedCandidates(category.key, candidates);
@@ -290,7 +284,7 @@ const CandidatesPage: React.FC = () => {
 
         const hasMoreCandidates = candidates.length > 4;
         const isShowingAll = showAllCandidates[category.key];
-        const isLoading = categoryLoading[category.key];
+        const isLoading = false; // Simplified since we don't have categoryLoading
 
         return (
             <section className="mb-8 md:mb-12">
@@ -317,18 +311,8 @@ const CandidatesPage: React.FC = () => {
                                 }}
                             >
                                 <option value="">{category.filterLabel}</option>
-                                {category.filterType === 'location'
-                                    ? filterOptions.counties?.map((county) => (
-                                        <option key={county.county_code} value={county.county_code}>
-                                            {county.county}
-                                        </option>
-                                    ))
-                                    : filterOptions.constituencies?.map((constituency) => (
-                                        <option key={constituency.constituency_code} value={constituency.constituency_code}>
-                                            {constituency.constituency}
-                                        </option>
-                                    ))
-                                }
+                                {/* Placeholder for counties - would need to be implemented */}
+                                <option value="" disabled>No counties available</option>
                             </select>
                             <button className="p-1.5 text-black hover:text-gray-900" type="button">
                                 <Menu className="w-4 h-4" />
@@ -414,7 +398,7 @@ const CandidatesPage: React.FC = () => {
                     </div>
                 ) : searchResults.data && searchResults.data.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
-                        {searchResults.data.map((candidate: Candidate) => (
+                        {searchResults.data.map((candidate: BaseCandidate) => (
                             <CandidateCard
                                 key={candidate.id}
                                 candidate={formatCandidateForDisplay(candidate)}
@@ -484,11 +468,6 @@ const CandidatesPage: React.FC = () => {
                     className="bg-white border-b border-gray-200"
                     initialQuery={searchQuery}
                     initialFilters={searchFilters}
-                    filterOptions={{
-                        counties: filterOptions?.counties || [],
-                        constituencies: filterOptions?.constituencies || [],
-                        parties: filterOptions?.parties || []
-                    }}
                 />
 
                 {/* Main Content */}
@@ -524,37 +503,37 @@ const CandidatesPage: React.FC = () => {
                                     {/* Presidential Candidates */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'presidential')!}
-                                        candidates={candidatesData.presidential || []}
+                                        candidates={getCandidatesByPosition('president')}
                                     />
 
                                     {/* Gubernatorial Candidates */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'governors')!}
-                                        candidates={candidatesData.governors || []}
+                                        candidates={getCandidatesByPosition('governor')}
                                     />
 
                                     {/* Senatorial Candidates */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'senators')!}
-                                        candidates={candidatesData.senators || []}
+                                        candidates={getCandidatesByPosition('senator')}
                                     />
 
                                     {/* Women Representatives */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'women_reps')!}
-                                        candidates={candidatesData.women_reps || []}
+                                        candidates={getCandidatesByPosition('women_rep')}
                                     />
 
                                     {/* Members of Parliament */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'mps')!}
-                                        candidates={candidatesData.mps || []}
+                                        candidates={getCandidatesByPosition('mp')}
                                     />
 
                                     {/* MCAs Section */}
                                     <CategorySection
                                         category={categories.find(c => c.id === 'mcas')!}
-                                        candidates={candidatesData.mcas || []}
+                                        candidates={getCandidatesByPosition('mca')}
                                     />
                                 </div>
                             )}
