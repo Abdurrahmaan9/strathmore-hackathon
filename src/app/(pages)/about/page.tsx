@@ -10,6 +10,7 @@ import { TeamMember } from '@/components/sections/about/team-member';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import GlobalSearch from '@/components/common/global-search';
 import { Candidate } from '@/types/candidate.types';
+import { BaseCandidate } from '@/types/api';
 import useCandidates, { useCandidateSearch } from '@/hooks/use-candidates';
 import CandidateCard from '@/components/sections/candidates/candidate-card';
 
@@ -134,7 +135,7 @@ const AboutUs: React.FC = () => {
                     </div>
                 ) : searchResults.data && searchResults.data.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
-                        {searchResults.data.map((candidate: Candidate) => (
+                        {searchResults.data.map((candidate: BaseCandidate) => (
                             <CandidateCard
                                 key={candidate.id}
                                 candidate={formatCandidateForDisplay(candidate)}
