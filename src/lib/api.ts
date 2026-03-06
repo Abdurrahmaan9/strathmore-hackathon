@@ -179,6 +179,7 @@ interface ApiEndpoints {
         getCandidateDonors: (candidateId: string | number) => string;
         upload: string;
         addRecord: string;
+        getTotal:any
     };
     health: {
         reconciliation: string;
@@ -209,6 +210,7 @@ const API_ENDPOINTS: ApiEndpoints = {
         getCandidateDonors: (candidateId: string | number) => `donors/${candidateId}`,
         upload: 'donors/upload',
         addRecord: 'donors/record',
+        getTotal: 'donors/total',
     },
     health: {
         reconciliation: 'health/reconciliation',
