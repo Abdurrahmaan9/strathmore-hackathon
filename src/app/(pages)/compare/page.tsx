@@ -286,7 +286,7 @@ const ComparePage: React.FC = () => {
                             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                 <h2 className="text-xl font-semibold mb-6 text-blue-600">Quick Analysis</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="text-center p-4 bg-green-50 rounded-xl">
+                                    {/* <div className="text-center p-4 bg-green-50 rounded-xl">
                                         <h3 className="text-sm font-semibold mb-2 flex items-center justify-center text-green-700">
                                             <TrendingUp className="w-4 h-4 mr-1" /> Higher Integrity
                                         </h3>
@@ -295,7 +295,7 @@ const ComparePage: React.FC = () => {
                                                 ? selectedCandidates[0].candidate.name 
                                                 : selectedCandidates[1].candidate.name}
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="text-center p-4 bg-blue-50 rounded-xl">
                                         <h3 className="text-sm font-semibold mb-2 flex items-center justify-center text-blue-700">
                                             <DollarSign className="w-4 h-4 mr-1" /> Higher Spend
