@@ -15,7 +15,7 @@ import useCandidates from '@/hooks/use-candidates';
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
 
-  // Custom hooks for candidates data and search (updated for VoteTrace360 API)
+  // Custom hooks for candidates data and search (updated for Vote Trace Kenya API)
   const {
     candidates,
     loading,

@@ -13,7 +13,7 @@ export async function GET(
     const resolvedParams = await params;
     const path = resolvedParams.path.join('/');
     
-    // Handle parties endpoints with mock data since VoteTrace360 doesn't have parties
+    // Handle parties endpoints with mock data since Vote Trace Kenya doesn't have parties
     if (path.startsWith('parties')) {
       const mockData = {
         success: true,

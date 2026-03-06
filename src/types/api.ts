@@ -1,5 +1,5 @@
 // types/api.ts
-// Type definitions for VoteTrace360 API responses
+// Type definitions for Vote Trace Kenya API responses
 
 // Base API response types
 export interface BaseApiResponse<T> {

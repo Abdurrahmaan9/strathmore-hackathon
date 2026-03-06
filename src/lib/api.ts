@@ -164,7 +164,7 @@ const handleApiResponse = async <T>(apiCall: Promise<any>): Promise<any> => {
     }
 };
 
-// API endpoints structure - VoteTrace360
+// API endpoints structure - Vote Trace Kenya
 interface ApiEndpoints {
     candidates: {
         getAll: string;

@@ -197,7 +197,7 @@ const RecentAlerts: React.FC<RecentAlertsProps> = ({ candidates }) => {
                     <div className="text-center py-8 text-gray-500">
                         <Shield className="w-8 h-8 mx-auto mb-2" />
                         <p className="text-sm">All systems clear - No alerts</p>
-                        <p className="text-xs text-gray-400 mt-1">VoteTrace360 monitoring active</p>
+                        <p className="text-xs text-gray-400 mt-1">Vote Trace Kenya monitoring active</p>
                     </div>
                 )}
             </div>

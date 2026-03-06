@@ -307,11 +307,11 @@ const CandidatesPage: React.FC = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-start mb-6">
                                     <div>
-                                        <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.name}</h2>
+                                        <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.candidate.name}</h2>
                                         <span
                                             className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${getRiskLevelBgColor(candidateDetails.integrity.risk_level)}`}
                                         >
-                                            {candidateDetails.integrity.risk_level} - {candidateDetails.integrity_score}% Integrity
+                                            {candidateDetails.integrity.risk_level} - {candidateDetails.integrity.score}% Integrity
                                         </span>
                                     </div>
                                     <button

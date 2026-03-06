@@ -9,7 +9,7 @@ import candidatesService from '@/services/candidates.service';
 import useCandidates from '@/hooks/use-candidates';
 import { BaseCandidate, CandidateSummary, RiskLevel } from '@/types/api';
 
-// Comparison interface for VoteTrace360
+// Comparison interface for Vote Trace Kenya
 interface ComparisonCandidate {
     candidate: BaseCandidate;
     details: CandidateSummary | null;

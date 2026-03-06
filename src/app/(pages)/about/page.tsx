@@ -39,7 +39,7 @@ const AboutUs: React.FC = () => {
     const [expandedSection, setExpandedSection] = useState<ExpandedSectionType>(null);
     const [isClient, setIsClient] = useState(false);
 
-    // Custom hooks for candidates data and search (updated for VoteTrace360 API)
+    // Custom hooks for candidates data and search (updated for Vote Trace Kenya API)
     const {
         candidates,
         candidateDetails,
@@ -277,15 +277,15 @@ const AboutUs: React.FC = () => {
                         </section>
 
 
-                        {/* VoteTrace360 System Section */}
+                        {/* Vote Trace Kenya System Section */}
                         <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8 lg:mb-12 text-center">VoteTrace360 System</h2>
+                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8 lg:mb-12 text-center">Vote Trace Kenya System</h2>
                                 
                                 {/* System Overview */}
                                 <div className="text-center mb-12 md:mb-16">
                                     <p className="text-base md:text-lg lg:text-xl text-black max-w-4xl mx-auto leading-relaxed">
-                                        VoteTrace360 is a comprehensive electoral integrity platform that provides real-time monitoring and analysis of campaign finance, 
+                                        Vote Trace Kenya is a comprehensive electoral integrity platform that provides real-time monitoring and analysis of campaign finance, 
                                         donor contributions, and candidate compliance. Our system leverages advanced data analytics to ensure transparency and accountability 
                                         in the electoral process.
                                     </p>
@@ -368,7 +368,7 @@ const AboutUs: React.FC = () => {
                                             <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
                                                 <span className="text-white font-bold">API</span>
                                             </div>
-                                            <h4 className="font-semibold text-black mb-2">VoteTrace360 API</h4>
+                                            <h4 className="font-semibold text-black mb-2">Vote Trace Kenya API</h4>
                                             <p className="text-sm text-black">
                                                 RESTful API providing real-time data access for candidates, 
                                                 digital spend, and donor analysis.

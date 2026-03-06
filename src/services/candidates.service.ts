@@ -25,7 +25,7 @@ interface SearchParams {
     [key: string]: unknown; // Allow additional params for flexibility
 }
 
-// Define candidate data interfaces based on actual VoteTrace360 API responses
+// Define candidate data interfaces based on actual Vote Trace Kenya API responses
 interface BaseCandidate {
     id: number;
     name: string;
