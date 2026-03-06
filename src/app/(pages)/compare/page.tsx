@@ -250,6 +250,7 @@ const ComparePage: React.FC = () => {
                                     <div className="text-center">{selectedCandidates[1].candidate.name}</div>
                                 </div>
 
+
                                 {/* <div className="grid grid-cols-3 gap-6 py-3 border-b">
                                     <div className="text-sm">Risk Level</div>
                                     <div className="text-center">
