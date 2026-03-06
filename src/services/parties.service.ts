@@ -121,7 +121,7 @@ class PartiesService {
      * Get single party details
      */
     async getPartyDetails(slug: string): Promise<any> {
-        const endpoint = API_ENDPOINTS.parties.getBySlug(slug);
+        const endpoint = API_ENDPOINTS.parties.getDetails(slug);
         return handleApiResponse<PoliticalParty>(apiClient.get(endpoint));
     }
 
