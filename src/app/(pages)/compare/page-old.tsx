@@ -19,7 +19,7 @@ interface Filters {
     position: string;
     county_id: string;
     party_id: string;
-    search: string;
+    search?: string;
 }
 
 const ComparePage: React.FC = () => {
