@@ -199,7 +199,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">High Risk</p>
                                             <p className="text-2xl font-bold text-red-600">
-                                                {displayedCandidates.filter(c => c.risk_level === 'RED').length}
+                                                {displayedCandidates.filter(c => c.integrity.risk_level === 'RED').length}
                                             </p>
                                         </div>
                                         <TrendingDown className="w-8 h-8 text-red-600" />
@@ -210,7 +210,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">Low Risk</p>
                                             <p className="text-2xl font-bold text-green-600">
-                                                {displayedCandidates.filter(c => c.risk_level === 'GREEN').length}
+                                                {displayedCandidates.filter(c => c.integrity.risk_level === 'GREEN').length}
                                             </p>
                                         </div>
                                         <TrendingUp className="w-8 h-8 text-green-600" />
@@ -221,7 +221,7 @@ const CandidatesPage: React.FC = () => {
                                         <div>
                                             <p className="text-sm font-medium text-black">Total Spend</p>
                                             <p className="text-2xl font-bold text-gray-900">
-                                                {formatCurrency(displayedCandidates.reduce((sum, c) => sum + c.total_spend, 0))}
+                                                {formatCurrency(displayedCandidates.reduce((sum, c) => sum + c.financial_summary.total_estimated_spend, 0))}
                                             </p>
                                         </div>
                                         <DollarSign className="w-8 h-8 text-black" />
@@ -249,9 +249,9 @@ const CandidatesPage: React.FC = () => {
                                                     {candidate.name}
                                                 </h3>
                                                 <span
-                                                    className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskLevelBgColor(candidate.risk_level)}`}
+                                                    className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskLevelBgColor(candidate.integrity.risk_level)}`}
                                                 >
-                                                    {candidate.risk_level}
+                                                    {candidate.integrity.risk_level}
                                                 </span>
                                             </div>
                                             
@@ -263,23 +263,23 @@ const CandidatesPage: React.FC = () => {
                                                             <div
                                                                 className="h-2 rounded-full"
                                                                 style={{
-                                                                    width: `${candidate.integrity_score}%`,
-                                                                    backgroundColor: getRiskLevelColor(candidate.risk_level)
+                                                                    width: `${candidate.integrity.score}%`,
+                                                                    backgroundColor: getRiskLevelColor(candidate.integrity.risk_level)
                                                                 }}
                                                             />
                                                         </div>
-                                                        <span className="text-sm font-medium">{candidate.integrity_score}%</span>
+                                                        <span className="text-sm font-medium">{candidate.integrity.score}%</span>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Total Spend</span>
-                                                    <span className="text-sm font-medium">{formatCurrency(candidate.total_spend)}</span>
+                                                    <span className="text-sm font-medium">{formatCurrency(candidate.financial_summary.total_estimated_spend)}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-sm text-black">Digital Spend</span>
-                                                    <span className="text-sm font-medium">{formatCurrency(candidate.digital_spend)}</span>
+                                                    <span className="text-sm font-medium">{formatCurrency(candidate.financial_summary.total_digital_spend)}</span>
                                                 </div>
                                                 
                                                 <div className="flex justify-between items-center">
@@ -309,9 +309,9 @@ const CandidatesPage: React.FC = () => {
                                     <div>
                                         <h2 className="text-2xl font-bold text-gray-900">{candidateDetails.name}</h2>
                                         <span
-                                            className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${getRiskLevelBgColor(candidateDetails.risk_level)}`}
+                                            className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${getRiskLevelBgColor(candidateDetails.integrity.risk_level)}`}
                                         >
-                                            {candidateDetails.risk_level} - {candidateDetails.integrity_score}% Integrity
+                                            {candidateDetails.integrity.risk_level} - {candidateDetails.integrity_score}% Integrity
                                         </span>
                                     </div>
                                     <button
@@ -328,15 +328,15 @@ const CandidatesPage: React.FC = () => {
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Spend</span>
-                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.total_spend)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.financial_summary.total_estimated_spend)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Digital Spend</span>
-                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.digital_spend.total)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.financial_summary.total_digital_spend)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Physical Spend</span>
-                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.physical_spend)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.financial_summary.total_physical_spend)}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -346,28 +346,28 @@ const CandidatesPage: React.FC = () => {
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Donors</span>
-                                                <span className="font-medium text-black">{candidateDetails.donors.total_count}</span>
+                                                <span className="font-medium text-black">{candidateDetails.donor_count}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">Total Amount</span>
-                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.donors.total_amount)}</span>
+                                                <span className="font-medium text-black">{formatCurrency(candidateDetails.total_reported_income)}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-black">High Risk Donors</span>
-                                                <span className="font-medium text-red-600">{candidateDetails.donors.high_risk_count}</span>
+                                                <span className="font-medium text-red-600">{candidateDetails.risk_summary.high}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {candidateDetails.red_flags.length > 0 && (
+                                {candidateDetails.red_flags && Object.keys(candidateDetails.red_flags).length > 0 && (
                                     <div className="mt-6">
                                         <h3 className="text-lg font-semibold mb-4 text-red-600">Red Flags</h3>
                                         <ul className="space-y-2">
-                                            {candidateDetails.red_flags.map((flag, index) => (
+                                            {Object.entries(candidateDetails.red_flags).map(([key, value]: [string, any], index: number) => (
                                                 <li key={index} className="flex items-center gap-2 text-red-600">
                                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                                                    <span>{flag}</span>
+                                                    <span>{key}</span>
                                                 </li>
                                             ))}
                                         </ul>
