@@ -92,17 +92,7 @@ const ComparePage: React.FC = () => {
         try {
             setLoading(true);
 
-            // Load filter options
-            const [countiesResponse, partiesResponse] = await Promise.all([
-                candidatesService.getCounties(),
-                candidatesService.getParties()
-            ]);
-
-            if (countiesResponse.success && partiesResponse.success) {
-                setCounties(countiesResponse.data || []);
-                setParties(partiesResponse.data || []);
-            }
-
+            // Load candidates for comparison
             await loadCandidatesForComparison();
         } catch (err) {
             console.error('Error loading initial data:', err);
