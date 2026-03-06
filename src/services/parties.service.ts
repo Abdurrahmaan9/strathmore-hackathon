@@ -114,7 +114,7 @@ class PartiesService {
         return handleApiResponse<{
             parties: PoliticalParty[];
             content: FeaturedContent[];
-        }>(apiClient.get(API_ENDPOINTS.parties.featured));
+        }>(apiClient.get(API_ENDPOINTS.parties.getFeatured));
     }
 
     /**
