@@ -79,7 +79,10 @@ const ComparePage: React.FC = () => {
             if (candidate1Id) {
                 const candidate = candidates.find(c => c.id === parseInt(candidate1Id));
                 if (candidate) {
-                    setSelectedCandidates([candidate]);
+                    setSelectedCandidates([{
+                        candidate: candidate,
+                        details: null
+                    }]);
                 }
             }
         }
