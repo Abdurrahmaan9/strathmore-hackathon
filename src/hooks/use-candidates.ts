@@ -10,6 +10,9 @@ interface SearchFilters {
     min_total_spend?: number;
     max_total_spend?: number;
     search?: string;
+    position?: string;
+    county_id?: string;
+    constituency_id?: string;
 }
 
 interface SearchResults {
