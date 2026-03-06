@@ -250,7 +250,7 @@ const ComparePage: React.FC = () => {
                                     <div className="text-center">{selectedCandidates[1].candidate.name}</div>
                                 </div>
 
-                                <div className="grid grid-cols-3 gap-6 py-3 border-b">
+                                {/* <div className="grid grid-cols-3 gap-6 py-3 border-b">
                                     <div className="text-sm">Risk Level</div>
                                     <div className="text-center">
                                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${getRiskLevelBgColor(selectedCandidates[0].candidate.integrity.risk_level)}`}>
@@ -262,7 +262,7 @@ const ComparePage: React.FC = () => {
                                             {selectedCandidates[1].candidate.integrity.risk_level}
                                         </span>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="grid grid-cols-3 gap-6 py-3 border-b">
                                     <div className="text-sm">Total Spend</div>
