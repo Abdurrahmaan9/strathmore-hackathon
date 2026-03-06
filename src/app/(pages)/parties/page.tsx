@@ -4,7 +4,7 @@ import { Search, Users, MapPin, ExternalLink, AlertCircle, Loader2, Play, Calend
 import MainLayout from '@/components/layouts/main-layout';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import GlobalSearch from '@/components/common/global-search';
-import partiesService, { PoliticalParty, FeaturedContent } from '@/services/parties.service';
+// import partiesService, { PoliticalParty, FeaturedContent } from '@/services/parties.service';
 
 const PoliticalPartiesPage: React.FC = () => {
     const [isClient, setIsClient] = useState(false);

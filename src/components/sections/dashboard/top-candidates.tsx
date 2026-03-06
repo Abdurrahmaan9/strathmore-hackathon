@@ -130,7 +130,7 @@ const TopCandidates: React.FC<TopCandidatesProps> = ({ candidates }) => {
                                     <h4 className="font-semibold text-black">{candidate.name}</h4>
                                     <div className="flex items-center space-x-2">
                                         <span className="text-sm text-gray-600">Candidate</span>
-                                        <span className="text-xs">{getRiskIcon(candidate.risk_level)}</span>
+                                        <span className="text-xs">{getRiskIcon(candidate.integrity.risk_level)}</span>
                                         <span className={`text-xs font-medium ${complianceStatus.color}`}>
                                             {complianceStatus.text}
                                         </span>
