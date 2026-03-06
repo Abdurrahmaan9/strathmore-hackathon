@@ -3,7 +3,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'https://675cfa0152ad9dd6-102-212-236-169.serveousercontent.com';
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost';
+// const BACKEND_API_URL = process.env.BACKEND_API_URL || 'https://675cfa0152ad9dd6-102-212-236-169.serveousercontent.com';
 
 export async function GET(
   request: NextRequest,
@@ -12,6 +13,8 @@ export async function GET(
   try {
     const resolvedParams = await params;
     const path = resolvedParams.path.join('/');
+    
+    console.log(`Proxy GET request for path: ${path}`);
     
     // Handle parties endpoints with mock data since Vote Trace Kenya doesn't have parties
     if (path.startsWith('parties')) {
@@ -49,6 +52,116 @@ export async function GET(
       };
       
       return NextResponse.json(mockData, {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      });
+    }
+    
+    // Handle donors endpoints with mock data since backend doesn't have donor details
+    if (path.includes('donors/')) {
+      const pathParts = path.split('/');
+      const candidateId = pathParts[pathParts.length - 1]; // Get the last part (candidate ID)
+      console.log(`Handling donor request for candidate: ${candidateId}`);
+      
+      const mockDonorData = {
+        candidate_id: parseInt(candidateId),
+        total_reported_income: 10000000,
+        donor_count: 6,
+        risk_summary: {
+          high: 2,
+          medium: 0,
+          low: 4,
+          high_risk_percentage: 33.3
+        },
+        red_flags: {
+          briefcase_companies: 0,
+          unverifiable_entities: 2,
+          concentration_risk: {
+            top_donor_percentage: 40,
+            top_3_donors_percentage: 83
+          }
+        },
+        donors: [
+          {
+            id: 14,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Savanna Ventures Ltd",
+            donation_amount: 4000000,
+            registration_date: "2024-02-10",
+            company_age_days: 755,
+            risk_score: "LOW",
+            donation_percentage: 3.01,
+            risk_factors: []
+          },
+          {
+            id: 15,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Rift Valley Holdings",
+            donation_amount: 2500000,
+            registration_date: "2023-06-01",
+            company_age_days: 1009,
+            risk_score: "LOW",
+            donation_percentage: 1.88,
+            risk_factors: []
+          },
+          {
+            id: 16,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Coastal Traders Sacco",
+            donation_amount: 1800000,
+            registration_date: "2024-01-15",
+            company_age_days: 781,
+            risk_score: "LOW",
+            donation_percentage: 1.35,
+            risk_factors: []
+          },
+          {
+            id: 18,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Nairobi Realty Group",
+            donation_amount: 900000,
+            registration_date: "2022-11-01",
+            company_age_days: 1221,
+            risk_score: "LOW",
+            donation_percentage: 0.68,
+            risk_factors: []
+          },
+          {
+            id: 17,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Mr. Ali Hassan",
+            donation_amount: 600000,
+            registration_date: null,
+            company_age_days: null,
+            risk_score: "HIGH",
+            donation_percentage: 0.45,
+            risk_factors: []
+          },
+          {
+            id: 19,
+            created_at: "2026-03-06T17:45:37.479+00:00",
+            candidate_id: parseInt(candidateId),
+            donor_name: "Ms. Wanjiru Njoroge",
+            donation_amount: 200000,
+            registration_date: null,
+            company_age_days: null,
+            risk_score: "HIGH",
+            donation_percentage: 0.15,
+            risk_factors: []
+          }
+        ]
+      };
+      
+      return NextResponse.json(mockDonorData, {
         status: 200,
         headers: {
           'Access-Control-Allow-Origin': '*',

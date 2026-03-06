@@ -95,10 +95,12 @@ const ComparePage: React.FC = () => {
     };
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-KE', {
-            style: 'currency',
-            currency: 'KES',
-        }).format(amount);
+        if (amount >= 1000000) {
+            return `KES ${(amount / 1000000).toFixed(1)}M`;
+        } else if (amount >= 1000) {
+            return `KES ${(amount / 1000).toFixed(0)}K`;
+        }
+        return `KES ${amount.toFixed(0)}`;
     };
 
     const getRiskLevelBgColor = (level: RiskLevel) => {

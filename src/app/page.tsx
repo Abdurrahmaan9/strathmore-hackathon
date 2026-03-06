@@ -10,6 +10,7 @@ import CandidateIntegrityChart from '../components/sections/dashboard/candidate-
 import SpendingTrends from '../components/sections/dashboard/spending-trends';
 import RecentAlerts from '../components/sections/dashboard/recent-alerts';
 import TopCandidates from '../components/sections/dashboard/top-candidates';
+import CandidateDonors from '../components/sections/dashboard/candidate-donors';
 import useCandidates from '@/hooks/use-candidates';
 
 export default function Home() {
@@ -93,6 +94,7 @@ export default function Home() {
               <div className="lg:col-span-2 space-y-6">
                 <CandidateIntegrityChart candidates={candidates} />
                 <SpendingTrends candidates={candidates} />
+                {/* <CandidateDonors candidates={candidates} /> */}
               </div>
               
               {/* Right Column */}

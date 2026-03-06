@@ -117,7 +117,7 @@ const TopCandidates: React.FC<TopCandidatesProps> = ({ candidates }) => {
                     return (
                         <div
                             key={candidate.id}
-                            className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors gap-4"
                         >
                             <div className="flex items-center space-x-4">
                                 {/* Rank */}
@@ -139,7 +139,7 @@ const TopCandidates: React.FC<TopCandidatesProps> = ({ candidates }) => {
                             </div>
 
                             {/* Metrics */}
-                            <div className="flex items-center space-x-4">
+                            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                                 {/* Integrity Score */}
                                 <div className="text-center">
                                     <div className="flex items-center space-x-1">
@@ -178,7 +178,7 @@ const TopCandidates: React.FC<TopCandidatesProps> = ({ candidates }) => {
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskColor(candidate.integrity?.risk_level || 'GREEN')}`}>
                                         {candidate.integrity?.risk_level || 'GREEN'}
                                     </span>
-                                    <p className="text-xs text-gray-500 mt-1">Risk</p>
+                                    <p className="text-xs text-gray-500 mt-1 hidden sm:block">Risk</p>
                                 </div>
 
                                 {/* Trend */}
@@ -193,7 +193,7 @@ const TopCandidates: React.FC<TopCandidatesProps> = ({ candidates }) => {
 
             {/* Summary Stats */}
             <div className="border-t border-gray-200 pt-4 mt-4">
-                <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                     <div>
                         <div className="text-lg font-bold text-green-600">
                             {candidates.filter(c => c.integrity?.risk_level === 'GREEN').length}
