@@ -209,7 +209,7 @@ const SingleCandidatePage: React.FC = () => {
 
                 console.log('Fetching candidate with slug:', slug); // Debug log
 
-                const response = await candidatesService.getCandidateDetails(slug);
+                const response = await candidatesService.getCandidateSummary(parseInt(slug));
 
                 console.log('API Response:', response); // Debug log
 
