@@ -15,6 +15,13 @@ interface ComparisonCandidate {
     details: CandidateSummary | null;
 }
 
+interface Filters {
+    position: string;
+    county_id: string;
+    party_id: string;
+    search: string;
+}
+
 const ComparePage: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -22,7 +29,16 @@ const ComparePage: React.FC = () => {
     const [selectedCandidates, setSelectedCandidates] = useState<ComparisonCandidate[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [availableCandidates, setAvailableCandidates] = useState<BaseCandidate[]>([]);
+    const [filters, setFilters] = useState<Filters>({
+        position: '',
+        county_id: '',
+        party_id: ''
+    });
     const [showFilters, setShowFilters] = useState(false);
+    const [counties, setCounties] = useState<any[]>([]);
+    const [parties, setParties] = useState<any[]>([]);
+    const [comparisonData, setComparisonData] = useState<any>(null);
     const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
         basic_info: true,
         financial_summary: false,
@@ -63,7 +79,7 @@ const ComparePage: React.FC = () => {
             if (candidate1Id) {
                 const candidate = candidates.find(c => c.id === parseInt(candidate1Id));
                 if (candidate) {
-                    selectCandidate(0, candidate);
+                    setSelectedCandidates([candidate]);
                 }
             }
         }
@@ -71,7 +87,7 @@ const ComparePage: React.FC = () => {
 
     const loadInitialData = async () => {
         try {
-            setCandidatesLoading(true);
+            setLoading(true);
 
             // Load filter options
             const [countiesResponse, partiesResponse] = await Promise.all([
@@ -79,31 +95,27 @@ const ComparePage: React.FC = () => {
                 candidatesService.getParties()
             ]);
 
-            if (countiesResponse.success || Array.isArray(countiesResponse)) {
-                setCounties(countiesResponse.data || countiesResponse || []);
+            if (countiesResponse.success && partiesResponse.success) {
+                setCounties(countiesResponse.data || []);
+                setParties(partiesResponse.data || []);
             }
 
-            if (partiesResponse.success || Array.isArray(partiesResponse)) {
-                setParties(partiesResponse.data || partiesResponse || []);
-            }
-
-            // Load initial candidates
             await loadCandidatesForComparison();
         } catch (err) {
             console.error('Error loading initial data:', err);
             setError('Failed to load initial data');
         } finally {
-            setCandidatesLoading(false);
+            setLoading(false);
         }
     };
 
     const loadCandidateFromUrl = async (candidateSlug: string, position?: string) => {
         try {
             // First, load the specific candidate for comparison
-            const candidateResponse = await candidatesService.getCandidateForComparison(candidateSlug);
+            const response = await candidatesService.getCandidateSummary(parseInt(candidateSlug));
 
-            if (candidateResponse.success && candidateResponse.data) {
-                const candidate = candidateResponse.data;
+            if (response.success && response.data) {
+                const candidate = response.data;
 
                 // Set the candidate in the first slot
                 setSelectedCandidates([candidate, null]);
@@ -124,8 +136,8 @@ const ComparePage: React.FC = () => {
 
     const loadCandidatesForComparison = async () => {
         try {
-            setCandidatesLoading(true);
-            const response = await candidatesService.getCandidatesForComparison(filters);
+            setLoading(true);
+            const response = await candidatesService.getAllCandidates();
 
             if (response.success) {
                 setAvailableCandidates(response.data || []);
@@ -137,7 +149,7 @@ const ComparePage: React.FC = () => {
             console.error('Error loading candidates:', err);
             setAvailableCandidates([]);
         } finally {
-            setCandidatesLoading(false);
+            setLoading(false);
         }
     };
 
@@ -193,18 +205,11 @@ const ComparePage: React.FC = () => {
         try {
             setLoading(true);
             setError(null);
-
-            const response = await candidatesService.compareCandidates({
-                candidate1_slug: selectedCandidates[0].slug,
-                candidate2_slug: selectedCandidates[1].slug
+            
+            // For now, just set a simple comparison message
+            setComparisonData({
+                message: 'Comparison feature is under development'
             });
-
-            if (response.success) {
-                setSelectedCandidates([response.data.candidate1, response.data.candidate2]);
-                setComparisonData(response.data.comparison);
-            } else {
-                setError(response.message || 'Failed to compare candidates');
-            }
         } catch (err) {
             console.error('Error comparing candidates:', err);
             setError('Failed to load comparison data');
