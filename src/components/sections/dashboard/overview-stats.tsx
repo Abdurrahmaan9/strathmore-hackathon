@@ -63,12 +63,13 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({ candidates }) => {
         candidate.integrity?.risk_level === 'RED'
     ).length;
     
-    // Calculate total donors (this field might not be in backend yet, using placeholder)
+    // Calculate total donors (this field is only available in detailed candidate data, not in main list)
+    // We'll need to fetch donor data separately or use placeholder for now
     const totalDonors = candidates.reduce((sum, candidate) => {
         return sum + (candidate.donor_count || 0);
     }, 0);
 
-    // Calculate high risk donors (placeholder for now)
+    // Calculate high risk donors (placeholder for now - this is from detailed data)
     const highRiskDonors = candidates.reduce((sum, candidate) => {
         return sum + (candidate.high_risk_donors || 0);
     }, 0);
