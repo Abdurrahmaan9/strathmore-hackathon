@@ -3,7 +3,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3004';
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'https://675cfa0152ad9dd6-102-212-236-169.serveousercontent.com';
 
 export async function GET(
   request: NextRequest,
