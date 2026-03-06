@@ -54,6 +54,7 @@ const Header: React.FC = () => {
     ];
 
     const isActiveLink = (href: string) => {
+        if (!pathname) return false;
         if (href === '/') {
             return pathname === '/';
         }
